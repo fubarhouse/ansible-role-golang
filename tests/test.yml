@@ -10,6 +10,12 @@
     user:
       name: travis
       state: present
+  - name: add dependencies
+    package:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - rsync
   roles:
   - fubarhouse.curl
   - fubarhouse.commons
