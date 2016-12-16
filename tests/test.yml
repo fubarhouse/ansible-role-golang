@@ -5,7 +5,14 @@
   vars:
     fubarhouse_user: travis
     fubarhouse_user_dir: /home/travis
+    git_install_from_source: true
+    git_install_from_source_force_update: true
+    git_version: 2.9.3
   pre_tasks:
+  - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+    when: ansible_os_family == 'Debian'
+    changed_when: false
   - name: add travis
     user:
       name: travis
@@ -18,6 +25,7 @@
     - git
     - openssh-client
   roles:
+  - geerlingguy.git
   - fubarhouse.curl
   - fubarhouse.commons
   - role_under_test
