@@ -21,6 +21,9 @@
       state: present
     with_items:
     - rsync
+    - openssh-server
+    - openssh-client
+    failed_when: false
   - name: add travis
     user:
       name: travis
