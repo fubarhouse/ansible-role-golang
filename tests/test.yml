@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  sudo: true
+  vars:
+    fubarhouse_user: travis
+    fubarhouse_user_dir: /home/travis
+  pre_tasks:
+  - name: add travis
+    user:
+      name: travis
+      state: present
+  roles:
+  - geerlingguy.git
+  - fubarhouse.curl
+  - fubarhouse.commons
+  - role_under_test

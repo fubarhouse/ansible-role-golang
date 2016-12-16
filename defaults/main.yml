@@ -1,0 +1,29 @@
+---
+# defaults file for fubarhouse-golang
+
+# Go
+go_version: 1.7.4
+go_arch: linux-amd64
+go_location: /usr/local/go
+go_url: "https://storage.googleapis.com/golang/go{{ go_version }}.{{ go_arch }}.tar.gz"
+
+# For MacOS only:
+#go_arch: debian-amd64
+
+# Go get
+go_get:
+- github.com/gpmgo/gopm
+
+# Packages
+gopm_packages: []
+
+# Configuration
+shell_profiles:
+- .bash_profile
+shell_exports:
+- regex: "export GOROOT={{ go_location }}"
+  lineinfile: "export GOROOT={{ go_location }}"
+- regex: "export GOPATH={{ go_location }}/bin"
+  lineinfile: "export GOPATH={{ go_location }}/bin"
+- regex: export PATH=\$PATH:\$GOROOT/bin
+  lineinfile: export PATH=$PATH:$GOROOT/bin
