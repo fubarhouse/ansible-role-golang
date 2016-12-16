@@ -8,8 +8,6 @@
     url: "{{ go_url }}"
     dest: "/tmp/go{{ go_version }}.{{ go_arch }}.tar.gz"
     validate_certs: no
-  tags:
-  - hub
 
 - name: "Go-Lang | Ensure directory is writable"
   become: yes
@@ -20,8 +18,6 @@
     owner: "{{ fubarhouse_user }}"
     mode: 0755
     recurse: true
-  tags:
-  - hub
 
 - name: "Go-Lang | Unpack distribution"
   become: yes
@@ -30,8 +26,6 @@
     src: "/tmp/go{{ go_version }}.{{ go_arch }}.tar.gz"
     dest: "/tmp/"
     copy: "no"
-  tags:
-  - hub
 
 - name: "Go-Lang | Moving to installation directory"
   synchronize:
