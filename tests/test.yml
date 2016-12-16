@@ -16,6 +16,7 @@
       state: present
     with_items:
     - rsync
+    - ssh
   roles:
   - fubarhouse.curl
   - fubarhouse.commons
