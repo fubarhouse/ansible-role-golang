@@ -58,13 +58,13 @@ None.
 ````
 - hosts: localhost
   roles:
-    - fubarhouse.python
+    - fubarhouse.golang
 ````
 
 ## Installation
 
-* Install using `ansible-galaxy install fubarhouse.python`
-* Add the Python role to your playbook.
+* Install using `ansible-galaxy install fubarhouse.golang`
+* Add this role to your playbook.
 * Modify above variables as desired.
 
 ## License
@@ -73,4 +73,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2015 by [Karl Hepworth](https://twitter.com/fubarhouse).
+This role was created in 2016 by [Karl Hepworth](https://twitter.com/fubarhouse).
