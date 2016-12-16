@@ -15,7 +15,7 @@
       name: "{{ item }}"
       state: present
     with_items:
-    - rsync
+    - git
     - openssh-client
   roles:
   - fubarhouse.curl
