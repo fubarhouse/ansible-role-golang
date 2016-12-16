@@ -17,13 +17,6 @@
     user:
       name: travis
       state: present
-  - name: add dependencies
-    package:
-      name: "{{ item }}"
-      state: present
-    with_items:
-    - git
-    - openssh-client
   roles:
   - geerlingguy.git
   - fubarhouse.curl
