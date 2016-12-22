@@ -1,0 +1,86 @@
+---
+
+- name: "GoPM | Check folder permissions/state"
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ go_location }}/modules"
+    state: directory
+    mode: 0755
+    owner: "{{ fubarhouse_user }}"
+    recurse: yes
+
+- name: "GoPM | Run get commands for installed version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_symlink }} get {{ item }}"
+  environment:
+    GOPATH: "{{ go_location }}/pkg"
+    GOROOT: "{{ go_location }}/gos/go{{ go_version }}"
+  with_items: "{{ go_get }}"
+  when: go_version != 'master' and (go_install_type == 'gvm' or go_install_type == 'source')
+
+- name: "GoPM | Run get commands for installed source"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_symlink }} get -dfu {{ item }}"
+  environment:
+    GOPATH: "{{ go_location }}/pkg"
+    GOROOT: "{{ go_location }}/gos/{{ go_version }}"
+  with_items: "{{ go_get }}"
+  when: go_version == 'master' and (go_install_type == 'gvm' or go_install_type == 'source')
+
+- name: "GoPM | Run get commands for static install"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "go get -dfu {{ item }}"
+  environment:
+    GOPATH: "{{ go_location }}/pkg"
+    GOROOT: "{{ go_location }}"
+  with_items: "{{ go_get }}"
+  when: go_install_type == 'static'
+
+- name: "GoPM | Link installed version"
+  become: yes
+  become_user: root
+  file:
+    src: "{{ GVM_DEST }}/gos/go{{ go_version }}/bin/gopm"
+    dest: "{{ go_symlink }}pm"
+    state: link
+    mode: 0755
+    owner: "{{ fubarhouse_user }}"
+    force: yes
+  when: '"{{ go_version }}" != "master"'
+
+- name: "GoPM | Link source version"
+  become: yes
+  become_user: root
+  file:
+    src: "{{ GVM_DEST }}/gos/{{ go_version }}/bin/gopm"
+    dest: "{{ go_symlink }}pm"
+    state: link
+    mode: 0755
+    owner: "{{ fubarhouse_user }}"
+    force: yes
+  when: '"{{ go_version }}" == "master"'
+
+- name: "GoPM | Install packages for installed version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_symlink }}pm install {{ item }}"
+  with_items: "{{ gopm_packages }}"
+  when: '"github.com/gpmgo/gopm" in "{{ go_get }}" and go_version != "master" and (go_install_type == "gvm" or go_install_type == "source")'
+
+- name: "GoPM | Install packages installed source"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_symlink }}pm install {{ item }}"
+  with_items: "{{ gopm_packages }}"
+  when: '"github.com/gpmgo/gopm" in "{{ go_get }}" and go_version == "master" and (go_install_type == "gvm" or go_install_type == "source")'
+
+- name: "GoPM | Install packages for static installs"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_symlink }}pm install {{ item }}"
+  with_items: "{{ gopm_packages }}"
+  when: '"github.com/gpmgo/gopm" in "{{ go_get }}" and (go_install_type == "static")'

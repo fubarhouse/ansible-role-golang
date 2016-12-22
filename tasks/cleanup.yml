@@ -1,0 +1,69 @@
+---
+
+- name: "Generic | Find GOROOT"
+  shell: "echo $GOROOT | grep go"
+  register: echo_goroot
+  failed_when: false
+
+- name: "Generic | Removing directories"
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+  - "{{ echo_goroot.stdout | default(go_location) }}"
+  - "{{ go_location }}"
+  failed_when: false
+
+
+- name: "Go-Lang | Define shell exports to cleanup"
+  set_fact:
+    shell_exports_static:
+    - regex: "export GOROOT={{ go_location }}"
+      lineinfile: "export GOROOT={{ go_location }}"
+    - regex: "export GOPATH={{ go_location }}/bin"
+      lineinfile: "export GOPATH={{ go_location }}/bin"
+    - regex: export PATH=\$PATH:\$GOROOT/bin
+      lineinfile: export PATH=$PATH:$GOROOT/bin
+  when: shell_exports_static is undefined
+
+- name: "Go-Lang | Ensure shell profiles are clean"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  lineinfile:
+    dest: "{{ fubarhouse_user_dir }}/{{ item[0] }}"
+    regexp: "{{ item[1].regex }}"
+    line: "{{ item[1].lineinfile }}"
+    state: absent
+  with_nested:
+  - "{{ shell_profiles }}"
+  - "{{ shell_exports_static }}"
+  ignore_errors: yes
+  when: shell_exports_static is defined
+
+- name: "GVM | Define shell exports to cleanup"
+  set_fact:
+    shell_exports_gvm:
+    - regex: "export GOROOT={{ go_location }}"
+      lineinfile: "export GOROOT={{ go_location }}"
+    - regex: "export GOPATH={{ go_location }}/bin"
+      lineinfile: "export GOPATH={{ go_location }}/bin"
+    - regex: export PATH=\$PATH:\$GOROOT/bin
+      lineinfile: export PATH=$PATH:$GOROOT/bin
+#    - regex: "{{ GVM_DEST }}/scripts/gvm"
+#      lineinfile: source "{{ GVM_DEST }}/scripts/gvm"
+  when: shell_exports_gvm is undefined
+
+- name: "GVM | Ensure shell profiles are clean"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  lineinfile:
+    dest: "{{ fubarhouse_user_dir }}/{{ item[0] }}"
+    regexp: "{{ item[1].regex }}"
+    line: "{{ item[1].lineinfile }}"
+    state: absent
+  with_nested:
+  - "{{ shell_profiles }}"
+  - "{{ shell_exports_gvm }}"
+  ignore_errors: yes
+  when: shell_exports_gvm is defined
+
