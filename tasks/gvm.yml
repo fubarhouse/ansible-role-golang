@@ -1,0 +1,274 @@
+---
+
+- name: "GVM | Specify Debian dependencies"
+  set_fact:
+    gvm_dependencies:
+#    - golang
+    - curl
+    - git
+    - mercurial
+    - make
+    - binutils
+    - bison
+    - gcc
+    - build-essential
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: "GVM | Specify RedHat dependencies"
+  set_fact:
+    gvm_dependencies:
+#    - golang
+    - curl
+    - git
+    - make
+    - bison
+    - gcc
+    - glibc-devel
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: "GVM | Ensure dependencies are met"
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ gvm_dependencies }}"
+
+- name: "GVM | Git"
+  git:
+    repo: https://github.com/moovweb/gvm.git
+    dest: "{{ GVM_DEST }}"
+    clone: yes
+    update: yes
+    force: yes
+  failed_when: false
+
+- name: "GVM | Define shell exports"
+  set_fact:
+    shell_exports:
+    - regex: "export GO_ROOT={{ go_location }}"
+      lineinfile: "export GO_ROOT={{ go_location }}"
+    - regex: "export GOROOT={{ go_location }}"
+      lineinfile: "export GOROOT={{ go_location }}"
+    - regex: "export GOPATH={{ go_location }}/bin"
+      lineinfile: "export GOPATH={{ go_location }}/bin"
+    - regex: export PATH=\$PATH:\$GOROOT/bin
+      lineinfile: export PATH=$PATH:$GOROOT/bin
+    - regex: "{{ GVM_DEST }}/scripts/env/gvm"
+      lineinfile: source "{{ GVM_DEST }}/scripts/env/gvm"
+  when: shell_exports is undefined
+
+- name: "GVM | Ensure shell profiles are available"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  file:
+    path: "{{ fubarhouse_user_dir }}/{{ item }}"
+    state: touch
+  with_items: "{{ shell_profiles }}"
+  failed_when: false
+  when: shell_exports is defined
+
+- name: "GVM | Ensure shell profiles are configured"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  lineinfile:
+    dest: "{{ fubarhouse_user_dir }}/{{ item[0] }}"
+    regexp: "{{ item[1].regex }}"
+    line: "{{ item[1].lineinfile }}"
+    state: present
+  with_nested:
+  - "{{ shell_profiles }}"
+  - "{{ shell_exports }}"
+  ignore_errors: yes
+  when: shell_exports is defined
+
+- name: "GVM | Ensure directories are created"
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ fubarhouse_user }}"
+    mode: 0755
+    recurse: yes
+  with_items:
+  - "{{ GVM_DEST }}"
+  - "{{ GVM_DEST }}/archive"
+  - "{{ GVM_DEST }}/logs"
+  - "{{ GVM_DEST }}/environments"
+  - "{{ GVM_DEST }}/pkgsets/system/global"
+  - "{{ GVM_DEST }}/gos/system"
+
+- name: "GVM | Touch GVM script"
+  become: yes
+  become_user: "root"
+  file:
+    path: "{{ GVM_DEST }}/scripts/gvm"
+    state: touch
+    mode: 0777
+    owner: "{{ fubarhouse_user }}"
+
+- name: "GVM | Configure GVM script"
+  become: yes
+  become_user: "root"
+  template:
+    src: gvm.j2
+    dest: "{{ GVM_DEST }}/scripts/gvm"
+
+  ignore_errors: yes
+
+- name: "GVM | Copy environment files"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  template:
+    src: "{{ item.file }}"
+    dest: "{{ GVM_DEST }}/environments/{{ item.name }}"
+  with_items:
+  - name: system
+    file: system.j2
+  - name: default
+    file: default.j2
+
+- name: "GVM | Ensure backup URL points to valid URL"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  replace:
+    dest: "{{ go_location }}/scripts/install"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+  - regexp: 'https://go.googlecode.com/files'
+    replace: "{{ go_custom_mirror }}"
+  - regexp: 'Trying https://go.googlecode.com'
+    replace: "Trying {{ go_custom_mirror }}"
+
+- name: "GVM | Ensure backup URL points to valid URL"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  replace:
+    dest: "{{ go_location }}/scripts/install"
+    regexp: 'https://go.googlecode.com/files/'
+    replace: 'https://storage.googleapis.com/golang/go'
+
+- name: "GVM | Get installed versions"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ GVM_DEST }}/bin/gvm list"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  register: all_go_versions
+  failed_when: false
+
+- name: "GVM | Install default version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ GVM_DEST }}/bin/gvm install go{{ go_version }} {{ go_install_flag }}"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  when: '"{{ go_version }}" != "master" and "{{ go_version }}" not in "{{ go_versions }}" and "{{ go_version }}" not in "{{ all_go_versions.stdout_lines }}"'
+
+- name: "GVM | Link default version"
+  become: yes
+  become_user: root
+  file:
+    src: "{{ GVM_DEST }}/gos/go{{ go_version }}/bin/go"
+    dest: "{{ go_symlink }}"
+    state: link
+    mode: 0755
+    owner: "{{ fubarhouse_user }}"
+    force: yes
+  when: '"{{ go_version }}" != "master"'
+
+- name: "GVM | Link default legacy version"
+  become: yes
+  become_user: root
+  file:
+    src: "{{ GVM_DEST }}/gos/{{ go_version }}/bin/go"
+    dest: "{{ go_symlink }}"
+    state: link
+    mode: 0755
+    owner: "{{ fubarhouse_user }}"
+    force: yes
+  when: '"{{ go_version }}" in "{{ go_legacy_versions }}"'
+
+- name: "GVM | Install all requested legacy versions"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ GVM_DEST }}/bin/gvm install {{ item }} {{ go_install_flag }}"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  with_items: "{{ go_legacy_versions }}"
+  when: '"{{ item }}" not in "{{ all_go_versions.stdout_lines }}"'
+
+- name: "GVM | Install all requested versions"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ GVM_DEST }}/bin/gvm install go{{ item }} {{ go_install_flag }}"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  with_items: "{{ go_versions }}"
+  when: '"{{ item }}" != "master" and "{{ item }}" not in "{{ go_version }}" and "{{ item }}" not in "{{ all_go_versions.stdout_lines }}"'
+
+- name: "GVM | Install master version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ GVM_DEST }}/bin/gvm install {{ item }} {{ go_install_flag }}"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  with_items: "{{ go_versions }}"
+  when: '"master" in "{{ go_version }}" and "master" not in "{{ all_go_versions.stdout_lines }}"'
+
+- name: "GVM | Install from source"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ GVM_DEST }}/bin/gvm install {{ item }} {{ go_install_flag }}"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  with_items: "{{ go_versions }}"
+  when: '"{{ item }}" == "master" or "master" in "{{ go_version }}" and "master" not in "{{ all_go_versions.stdout_lines }}"'
+
+- name: "GVM | Link source version"
+  become: yes
+  become_user: root
+  file:
+    src: "{{ GVM_DEST }}/gos/{{ go_version }}/bin/go"
+    dest: "{{ go_symlink }}"
+    state: link
+    mode: 0755
+    owner: "{{ fubarhouse_user }}"
+    force: yes
+  when: '"{{ go_version }}" == "master"'
+
+- name: "GVM | Get current version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "go version"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  register: current_go_version
+  failed_when: false
+
+- name: "GVM | Set default version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_location }}/bin/gvm use go{{ go_version }} --default"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  when: '"{{ go_version }}" != "master" and "{{ go_version }}" not in "{{ current_go_version.stdout }}"'
+  failed_when: false
+
+- name: "GVM | Set default version to source"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_location }}/bin/gvm use {{ go_version }} --default"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  when: '"{{ go_version }}" == "master" and "{{ go_version }}" not in "{{ current_go_version.stdout }}"'
+  failed_when: false
+
+- name: "GVM | Verify version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_location }}/bin/gvm list"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  register: current_go_version_new
+  failed_when: '"go{{ go_version }}" not in "{{ current_go_version_new.stdout }}"'

@@ -1,89 +1,18 @@
 ---
 # tasks file for fubarhouse-golang
 
-- name: "Go-Lang | Get distribution"
-  become: yes
-  become_user: root
-  get_url:
-    url: "{{ go_url }}"
-    dest: "/tmp/go{{ go_version }}.{{ go_arch }}.tar.gz"
-    validate_certs: no
+- name: "Include tasks for a clean installation"
+  include: cleanup.yml
+  when: go_install_clean == true
 
-- name: "Go-Lang | Ensure directory is writable"
-  become: yes
-  become_user: root
-  file:
-    path: "{{ go_location }}"
-    state: directory
-    owner: "{{ fubarhouse_user }}"
-    mode: 0755
-    recurse: true
+- name: "Include tasks for a static installation"
+  include: static.yml
+  when: go_install_type == "static"
 
-- name: "Go-Lang | Unpack distribution"
-  become: yes
-  become_user: root
-  unarchive:
-    src: "/tmp/go{{ go_version }}.{{ go_arch }}.tar.gz"
-    dest: "/tmp/"
-    copy: "no"
+- name: "Include tasks for a dynamic installation via GVM"
+  include: gvm.yml
+  when: go_install_type == "gvm" or go_install_type == "source"
 
-- name: "Go-Lang | Moving to installation directory"
-  synchronize:
-    src: "/tmp/go/"
-    dest: "{{ go_location }}"
-    delete: yes
-    recursive: yes
-
-- name: "Go-Lang | Remove temporary data"
-  become: yes
-  become_user: root
-  file:
-    path: "/tmp/go/"
-    state: absent
-
-- name: "Go-Lang | Ensure shell profiles are available"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  file:
-    path: "{{ fubarhouse_user_dir }}/{{ item }}"
-    state: touch
-  with_items: "{{ shell_profiles }}"
-  failed_when: false
-
-- name: "Go-Lang | Ensure shell profiles are configured"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item[0] }}"
-    regexp: "{{ item[1].regex }}"
-    line: "{{ item[1].lineinfile }}"
-    state: present
-  with_nested:
-  - "{{ shell_profiles }}"
-  - "{{ shell_exports }}"
-  ignore_errors: yes
-
-- name: "Go-Lang | Verify version"
-  shell: "{{ go_location }}/bin/go version"
-  register: go_version_output
-  failed_when: '"{{ go_version }}" not in "{{ go_version_output.stdout }}"'
-
-- name: "Go-Lang | Restart shell"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "source {{ fubarhouse_user_dir }}/{{ item }}"
-  with_items: "{{ shell_profiles }}"
-  failed_when: false
-
-- name: "Go-Lang | Run get commands"
-  become: yes
-  become_user: "root"
-  shell: "{{ go_location }}/bin/go get -u {{ item }}"
-  environment:
-    GOPATH: "{{ go_location }}/modules"
-  with_items: "{{ go_get }}"
-
-- name: "GoPM | Install packages"
-  shell: "{{ go_location }}/modules/bin/gopm install {{ item }}"
-  with_items: "{{ gopm_packages }}"
-  when: '"github.com/gpmgo/gopm" in "{{ go_get }}"'
+- name: "Include tasks for GoPM packages"
+  include: gopm.yml
+  when: go_install_type == "gvm" or go_install_type == "source" or go_install_type == "static"

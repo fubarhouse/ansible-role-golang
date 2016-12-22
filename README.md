@@ -4,13 +4,14 @@
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-fubarhouse--golang-5140.svg)](https://galaxy.ansible.com/fubarhouse/golang)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/fubarhouse/ansible-role-golang/master/LICENSE)
 
-* Install Go to configurable locations.
-* Install Go packages
-* Support for custom `go get` applications.
-
-**Note**: I am actively seeking packages to include here which are installed using `go get`. They will all feature custom installation tasks and logic.
- 
-**Note**: You may be required to restart your shell session or to source the configured `shell_profiles` prior to use after installation.
+* Clean install optional - recommended if changing between static and gvm installations.
+* Install a static binary of Go; or
+* Install multiple versions of Go using GVM; or
+* Install from Go Source.
+* Installs using the Ansible way, the GVM installation script has been converted into Ansible tasks.
+* Install allows additional flags to be passed in (ie --binary --prefer-binary --source)
+* Install from mirror URL
+* Install to any location
 
 ## Requirements
 
