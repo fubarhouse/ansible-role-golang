@@ -19,10 +19,27 @@
 
 ## Role Variables
 
+Installation configuration
+````
+go_install_type: gvm # or static
+go_install_flag: "--binary"
+go_custom_mirror: https://storage.googleapis.com/golang
+````
+
 Basic configuration
 ````
 go_version: 1.7.4
 go_location: /usr/local/go
+
+````
+
+Multiple version configuration
+````
+go_versions:
+- 1.7.1
+- 1.7.3
+go_legacy_versions:
+- 1.4.0
 ````
 
 ***OS-Specific configuration***
