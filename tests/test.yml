@@ -15,8 +15,17 @@
     apt:
       update_cache: yes
       cache_valid_time: 600
-    when: ansible_os_family == 'Debian'
     changed_when: false
+  - name: Update apt cache.
+    apt:
+      update_cache: yes
+      cache_valid_time: 600
+    changed_when: false
+  - name: Update yum cache
+    become: yes
+    become_user: root
+    shell: yum clean all
+    failed_when: false
   - name: Install dependencies
     package:
       name: "{{ item }}"
