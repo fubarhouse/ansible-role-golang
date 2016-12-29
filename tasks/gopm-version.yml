@@ -1,0 +1,29 @@
+---
+
+- name: "GoPM | Run get commands"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_symlink }} get {{ item.url }}"
+  environment:
+    GOPATH: "{{ GVM_DEST }}/gos/go{{ go_version }}/bin"
+    GOROOT: "{{ GVM_DEST }}/gos/go{{ go_version }}/"
+  with_items: "{{ go_get }}"
+
+- name: "GoPM | Link binaries"
+  become: yes
+  become_user: root
+  file:
+    src: "{{ GVM_DEST }}/gos/go{{ go_version }}/bin/bin/{{ item.name }}"
+    dest: "{{ GVM_DEST }}/bin/{{ item.name }}"
+    state: link
+    mode: 0755
+    owner: "{{ fubarhouse_user }}"
+    force: yes
+  with_items: "{{ go_get }}"
+
+- name: "GoPM | Install packages"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ GVM_DEST }}/bin/gopm install {{ item }}"
+  with_items: "{{ gopm_packages }}"
+  when: '"github.com/gpmgo/gopm" in "{{ go_get }}"'

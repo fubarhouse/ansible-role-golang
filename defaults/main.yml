@@ -6,10 +6,9 @@ go_install_flag: "--binary"
 go_custom_mirror: https://storage.googleapis.com/golang
 
 # Go
-go_install_clean: false
-go_version: 1.3
+go_install_clean: true
+go_version: 1.7.1
 go_versions: []
-go_legacy_versions: []
 go_arch: linux-amd64
 go_location: /usr/local/go
 go_symlink: "{{ go_location }}/bin/go"
@@ -19,13 +18,17 @@ go_url: "{{ go_custom_mirror }}/go{{ go_version }}.{{ go_arch }}.tar.gz"
 GVM_DEST: "{{ go_location }}"
 GVM_ROOT: "{{ go_location }}"
 GVM_NAME: "gvm"
+gvm_dependencies: []
 
 # For MacOS Static installs only:
 #go_arch: debian-amd64
 
 # Go get
 go_get:
-- github.com/gpmgo/gopm
+- name: gopm
+  url: github.com/gpmgo/gopm
+- name: golint
+  url: github.com/golang/lint/golint
 
 # Packages
 gopm_packages: []

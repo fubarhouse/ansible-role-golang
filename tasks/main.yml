@@ -6,12 +6,16 @@
   when: go_install_clean == true
 
 - name: "Include tasks for a static installation"
-  include: static.yml
+  include: install-static.yml
   when: go_install_type == "static"
 
+- name: "Include tasks for a source install via GVM"
+  include: install-gvm.yml
+  when: go_install_type == "source"
+
 - name: "Include tasks for a dynamic installation via GVM"
-  include: gvm.yml
-  when: go_install_type == "gvm" or go_install_type == "source"
+  include: install-gvm.yml
+  when: go_install_type == "gvm"
 
 - name: "Include tasks for GoPM packages"
   include: gopm.yml

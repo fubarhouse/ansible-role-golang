@@ -31,6 +31,7 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ gvm_dependencies }}"
+  when: gvm_dependencies is defined
 
 - name: "GVM | Git"
   git:
@@ -157,118 +158,14 @@
   register: all_go_versions
   failed_when: false
 
-- name: "GVM | Install default version"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "{{ GVM_DEST }}/bin/gvm install go{{ go_version }} {{ go_install_flag }}"
-  environment:
-    GVM_ROOT: "{{ go_location }}"
-  when: '"{{ go_version }}" != "master" and "{{ go_version }}" not in "{{ go_versions }}" and "{{ go_version }}" not in "{{ all_go_versions.stdout_lines }}"'
+- name: "GVM | Include tasks for static install"
+  include: "install-gvm-static.yml"
+  when: go_install_type == 'static'
 
-- name: "GVM | Link default version"
-  become: yes
-  become_user: root
-  file:
-    src: "{{ GVM_DEST }}/gos/go{{ go_version }}/bin/go"
-    dest: "{{ go_symlink }}"
-    state: link
-    mode: 0755
-    owner: "{{ fubarhouse_user }}"
-    force: yes
-  when: '"{{ go_version }}" != "master"'
+- name: "GVM | Include tasks for source install"
+  include: "install-gvm-source.yml"
+  when: go_install_type == 'source'
 
-- name: "GVM | Link default legacy version"
-  become: yes
-  become_user: root
-  file:
-    src: "{{ GVM_DEST }}/gos/{{ go_version }}/bin/go"
-    dest: "{{ go_symlink }}"
-    state: link
-    mode: 0755
-    owner: "{{ fubarhouse_user }}"
-    force: yes
-  when: '"{{ go_version }}" in "{{ go_legacy_versions }}"'
-
-- name: "GVM | Install all requested legacy versions"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "{{ GVM_DEST }}/bin/gvm install {{ item }} {{ go_install_flag }}"
-  environment:
-    GVM_ROOT: "{{ go_location }}"
-  with_items: "{{ go_legacy_versions }}"
-  when: '"{{ item }}" not in "{{ all_go_versions.stdout_lines }}"'
-
-- name: "GVM | Install all requested versions"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "{{ GVM_DEST }}/bin/gvm install go{{ item }} {{ go_install_flag }}"
-  environment:
-    GVM_ROOT: "{{ go_location }}"
-  with_items: "{{ go_versions }}"
-  when: '"{{ item }}" != "master" and "{{ item }}" not in "{{ go_version }}" and "{{ item }}" not in "{{ all_go_versions.stdout_lines }}"'
-
-- name: "GVM | Install master version"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "{{ GVM_DEST }}/bin/gvm install {{ item }} {{ go_install_flag }}"
-  environment:
-    GVM_ROOT: "{{ go_location }}"
-  with_items: "{{ go_versions }}"
-  when: '"master" in "{{ go_version }}" and "master" not in "{{ all_go_versions.stdout_lines }}"'
-
-- name: "GVM | Install from source"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "{{ GVM_DEST }}/bin/gvm install {{ item }} {{ go_install_flag }}"
-  environment:
-    GVM_ROOT: "{{ go_location }}"
-  with_items: "{{ go_versions }}"
-  when: '"{{ item }}" == "master" or "master" in "{{ go_version }}" and "master" not in "{{ all_go_versions.stdout_lines }}"'
-
-- name: "GVM | Link source version"
-  become: yes
-  become_user: root
-  file:
-    src: "{{ GVM_DEST }}/gos/{{ go_version }}/bin/go"
-    dest: "{{ go_symlink }}"
-    state: link
-    mode: 0755
-    owner: "{{ fubarhouse_user }}"
-    force: yes
-  when: '"{{ go_version }}" == "master"'
-
-- name: "GVM | Get current version"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "go version"
-  environment:
-    GVM_ROOT: "{{ go_location }}"
-  register: current_go_version
-  failed_when: false
-
-- name: "GVM | Set default version"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "{{ go_location }}/bin/gvm use go{{ go_version }} --default"
-  environment:
-    GVM_ROOT: "{{ go_location }}"
-  when: '"{{ go_version }}" != "master" and "{{ go_version }}" not in "{{ current_go_version.stdout }}"'
-  failed_when: false
-
-- name: "GVM | Set default version to source"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "{{ go_location }}/bin/gvm use {{ go_version }} --default"
-  environment:
-    GVM_ROOT: "{{ go_location }}"
-  when: '"{{ go_version }}" == "master" and "{{ go_version }}" not in "{{ current_go_version.stdout }}"'
-  failed_when: false
-
-- name: "GVM | Verify version"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "{{ go_location }}/bin/gvm list"
-  environment:
-    GVM_ROOT: "{{ go_location }}"
-  register: current_go_version_new
-  failed_when: '"go{{ go_version }}" not in "{{ current_go_version_new.stdout }}"'
+- name: "GVM | Include tasks for version-specific install"
+  include: "install-gvm-version.yml"
+  when: go_install_type == 'gvm'
