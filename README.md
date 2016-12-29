@@ -90,7 +90,7 @@ None.
 - hosts: localhost
   vars:
     go_install_type: static
-    go_version: go1.7.4
+    go_version: 1.7.4
   roles:
     - fubarhouse.golang
 ````
