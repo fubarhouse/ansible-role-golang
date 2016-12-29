@@ -20,7 +20,7 @@
   - name: Update yum cache
     become: yes
     become_user: root
-    shell: yum clean all
+    shell: yum update -y && yum clean all -y
     failed_when: false
     when: ansible_os_family == 'RedHat'
   - name: Install dependencies
