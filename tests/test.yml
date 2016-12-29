@@ -20,6 +20,7 @@
   - name: Add repository
     yum_repository:
       name: rsync
+      description: rsync fedora repo
       baseurl: http://dl.fedoraproject.org/pub/fedora/linux/releases/24/Everything/x86_64/os/Packages/r/rsync-3.1.2-2.fc24.x86_64.rpm
     when: ansible_os_family == 'RedHat'
     failed_when: false
