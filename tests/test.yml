@@ -11,6 +11,12 @@
     go_install_type: static
     go_version: 1.7.4
   pre_tasks:
+  - name: Update apt cache.
+    apt:
+      update_cache: yes
+      cache_valid_time: 600
+    when: ansible_os_family == 'Debian'
+    changed_when: false
   - name: Install dependencies
     package:
       name: "{{ item }}"
