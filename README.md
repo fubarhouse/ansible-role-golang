@@ -7,11 +7,12 @@
 * Clean install optional - recommended if changing between static and gvm installations.
 * Install a static binary of Go; or
 * Install multiple versions of Go using GVM; or
-* Install from Go Source.
+* Install from Go Source (currently does not compile Go source).
 * Installs using the Ansible way, the GVM installation script has been converted into Ansible tasks.
 * Install allows additional flags to be passed in (ie --binary --prefer-binary --source)
 * Install from mirror URL
 * Install to any location
+* Example playbooks have been provided for the four installation types.
 
 ## Requirements
 
@@ -44,7 +45,7 @@ go_legacy_versions:
 
 ***OS-Specific configuration***
 
-To get this role working on Mac, or any other non-windows system specified at the Go [download page](https://golang.org/dl/), change this variable to the respective code of your system:
+To get `static` installations working on Mac, or any other non-windows system specified at the Go [download page](https://golang.org/dl/), change this variable to the respective code of your system:
 ````
 go_arch: linux-amd64
 ````
@@ -53,7 +54,10 @@ go_arch: linux-amd64
 To install GoPM, and any other `go get` binaries/projects, add them to `go_get`
 ````
 go_get:
-- github.com/gpmgo/gopm
+- name: gopm
+  url: github.com/gpmgo/gopm
+- name: golint
+  url: github.com/golang/lint/golint
 ````
 
 To add packages (none installed currently by default), use gopm_packages (depends on gopm). 
@@ -73,8 +77,49 @@ shell_profiles:
 None.
 
 ## Example Playbook
+
+### Example #1 - default installation
 ````
 - hosts: localhost
+  roles:
+    - fubarhouse.golang
+````
+
+### Example #2 - static installation
+````
+- hosts: localhost
+  vars:
+    go_install_type: static
+    go_version: 1.7.4
+  roles:
+    - fubarhouse.golang
+````
+
+### Example #3 - standard gvm installation
+````
+- hosts: localhost
+  vars:
+    go_install_type: gvm
+    go_version: go1.7.4
+    go_versions:
+    - 1
+    - 1.7.0
+    - 1.7.1
+    - 1.7.3
+  roles:
+    - fubarhouse.golang
+````
+
+### Example #4 - gvm installation via source method
+****Note****: The `source` method does not build/compile versions, but still runs off binary installations by default. This is planned to change in the future.
+````
+- hosts: localhost
+  vars:
+    go_install_type: source
+    go_version: go1.7.4
+    go_versions:
+    - go1
+    - go1.7.1
   roles:
     - fubarhouse.golang
 ````
@@ -84,6 +129,9 @@ None.
 * Install using `ansible-galaxy install fubarhouse.golang`
 * Add this role to your playbook.
 * Modify above variables as desired.
+* Whenever changes/upgrades are required, it's ****recommended**** to either:
+  * set `go_install_clean` to `true` (boolean) in order to perform a clean installation; or
+  * simply rerun with the changed variables in order to relink the symlinks to the default go version - otherwise the symlinks to `go_get` packages will always point to their original destination.
 
 ## License
 

@@ -1,0 +1,49 @@
+---
+
+- name: "GVM | Install all requested versions"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ GVM_DEST }}/bin/gvm install {{ item }} {{ go_install_flag }}"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  with_items:
+  - "{{ go_version }}"
+  - "{{ go_versions }}"
+
+- name: "GVM | Link source version"
+  become: yes
+  become_user: root
+  file:
+    src: "{{ GVM_DEST }}/gos/{{ go_version }}/bin/go"
+    dest: "{{ go_symlink }}"
+    state: link
+    mode: 0755
+    owner: "{{ fubarhouse_user }}"
+    force: yes
+
+- name: "GVM | Get current version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "go version"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  register: current_go_version
+  failed_when: false
+
+- name: "GVM | Set default version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_location }}/bin/gvm use {{ go_version }} --default"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  when: '"{{ go_version }}" not in "{{ current_go_version.stdout }}"'
+  failed_when: false
+
+- name: "GVM | Verify version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ go_location }}/bin/gvm list"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  register: current_go_version_new
+  failed_when: '"{{ go_version }}" not in "{{ current_go_version_new.stdout }}"'

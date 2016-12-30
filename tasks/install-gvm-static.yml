@@ -1,0 +1,10 @@
+---
+
+- name: "GVM | Get current version"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "go version"
+  environment:
+    GVM_ROOT: "{{ go_location }}"
+  register: current_go_version
+  failed_when: false
