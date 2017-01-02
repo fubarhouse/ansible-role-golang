@@ -3,7 +3,7 @@
 - name: "GoPM | Run get commands"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ go_symlink }} get -u {{ item.url }}"
+  shell: "{{ go_location }}/gos/{{ go_version }}/bin/go get -u {{ item.url }}"
   environment:
     GOPATH: "{{ go_location }}/gos/{{ go_version }}/bin"
     GOROOT: "{{ go_location }}/gos/{{ go_version }}/"
@@ -24,6 +24,6 @@
 - name: "GoPM | Install packages"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ go_symlink }}pm install {{ item }}"
+  shell: "{{ GVM_DEST }}/bin/gopm install {{ item }}"
   with_items: "{{ gopm_packages }}"
   when: '"github.com/gpmgo/gopm" in "{{ go_get }}"'

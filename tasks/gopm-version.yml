@@ -3,7 +3,7 @@
 - name: "GoPM | Run get commands"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ go_symlink }} get {{ item.url }}"
+  shell: "{{ go_location }}/gos/go{{ go_version }}/bin/go get {{ item.url }}"
   environment:
     GOPATH: "{{ GVM_DEST }}/gos/go{{ go_version }}/bin"
     GOROOT: "{{ GVM_DEST }}/gos/go{{ go_version }}/"

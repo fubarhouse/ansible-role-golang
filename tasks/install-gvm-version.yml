@@ -6,18 +6,7 @@
   shell: "{{ GVM_DEST }}/bin/gvm install go{{ go_version }} {{ go_install_flag }}"
   environment:
     GVM_ROOT: "{{ go_location }}"
-  when: '"{{ go_version }}" != "master" and "{{ go_version }}" not in "{{ go_versions }}" and "{{ go_version }}" not in "{{ all_go_versions.stdout_lines }}"'
-
-- name: "GVM | Link default version"
-  become: yes
-  become_user: root
-  file:
-    src: "{{ GVM_DEST }}/gos/go{{ go_version }}/bin/go"
-    dest: "{{ go_symlink }}"
-    state: link
-    mode: 0755
-    owner: "{{ fubarhouse_user }}"
-    force: yes
+  when: '"{{ go_version }}" != "master" and "{{ go_version }}" not in "{{ go_versions }}" and "{{ go_version }}" not in "{{ all_go_versions.stdout_lines | default() }}"'
 
 - name: "GVM | Install all requested versions"
   become: yes
@@ -25,7 +14,9 @@
   shell: "{{ GVM_DEST }}/bin/gvm install go{{ item }} {{ go_install_flag }}"
   environment:
     GVM_ROOT: "{{ go_location }}"
-  with_items: "{{ go_versions }}"
+  with_items:
+  - 1.4
+  - "{{ go_versions }}"
   when: '"{{ item }}" != "master" and "{{ item }}" not in "{{ go_version }}" and "{{ item }}" not in "{{ all_go_versions.stdout_lines }}"'
 
 - name: "GVM | Get current version"
@@ -40,7 +31,7 @@
 - name: "GVM | Set default version"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "{{ go_location }}/bin/gvm use go{{ go_version }} --default"
+  shell: "{{ go_location }}/scripts/gvm_use_custom use {{ go_version }} --default"
   environment:
     GVM_ROOT: "{{ go_location }}"
   when: '"{{ go_version }}" != "master" and "{{ go_version }}" not in "{{ current_go_version.stdout }}"'

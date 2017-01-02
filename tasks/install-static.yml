@@ -43,6 +43,13 @@
     dest: "{{ go_location }}"
     delete: yes
     recursive: yes
+  when: ansible_ssh_user is undefined
+
+- name: "Go-Lang | Moving to installation directory"
+  become: yes
+  become_user: "root"
+  shell: "cp -rf /tmp/go/* {{ go_location }}/"
+  when: ansible_ssh_user is defined
 
 - name: "Go-Lang | Remove temporary data"
   become: yes

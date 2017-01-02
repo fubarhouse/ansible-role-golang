@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-export GVM_ROOT; GVM_ROOT="$GVM_DEST/$GVM_NAME"
-export gvm_go_name; gvm_go_name="system"
-export gvm_pkgset_name; gvm_pkgset_name="global"
-export GOROOT="{{ go_location }}/gos/go{{ go_version }}"
-export GOPATH="{{ go_location }}/bin/go"
+export GVM_ROOT="{{ go_location }}"
+export gvm_go_name="system"
+export gvm_pkgset_name="global"
+export GOROOT="{{ go_location }}/gos/go1.4"
+export GOPATH="{{ go_location }}/gos/go1.4/bin/go"
 export PATH="${PATH}:{{ go_location }}/bin"

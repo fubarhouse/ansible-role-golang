@@ -1,13 +1,13 @@
 ---
 # defaults file for fubarhouse-golang
 
-go_install_type: gvm
+go_install_type: source
 go_install_flag: "--binary"
 go_custom_mirror: https://storage.googleapis.com/golang
 
 # Go
 go_install_clean: true
-go_version: 1.7.1
+go_version: go1.7.4
 go_versions: []
 go_arch: linux-amd64
 go_location: /usr/local/go
