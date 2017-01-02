@@ -37,10 +37,9 @@ go_location: /usr/local/go
 Multiple version configuration
 ````
 go_versions:
+- 1.4
 - 1.7.1
 - 1.7.3
-go_legacy_versions:
-- 1.4.0
 ````
 
 ***OS-Specific configuration***
