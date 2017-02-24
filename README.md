@@ -123,6 +123,19 @@ None.
     - fubarhouse.golang
 ````
 
+### Example #5 - Example macOSX installation with a static go1.8 installation:
+````
+- hosts: localhost
+  become: yes
+  vars:
+    go_install_type: static
+    go_version: 1.8
+    go_arch: darwin-amd64
+    go_location: /Users/karl/go
+  roles:
+    - fubarhouse.golang
+````
+
 ## Installation
 
 * Install using `ansible-galaxy install fubarhouse.golang`

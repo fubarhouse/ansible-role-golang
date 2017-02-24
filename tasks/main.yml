@@ -20,3 +20,10 @@
 - name: "Include tasks for GoPM packages"
   include: gopm.yml
   when: go_install_type == "gvm" or go_install_type == "source" or go_install_type == "static"
+
+- name: "Reset Go permissions"
+  file:
+    dest: "{{ go_location }}"
+    owner: "{{ fubarhouse_user }}"
+    mode: 0775
+    recurse: yes
