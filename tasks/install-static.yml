@@ -83,7 +83,7 @@
   when: shell_exports is defined
 
 - name: "Go-Lang | Verify version"
-  shell: "{{ go_location }}/bin/go version"
+  shell: "export GOROOT={{ go_location }}; export GOPATH={{ go_location }}/bin; {{ go_location }}/bin/go version"
   register: go_version_output
   failed_when: '"{{ go_version }}" not in "{{ go_version_output.stdout }}"'
 

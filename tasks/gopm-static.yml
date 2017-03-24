@@ -9,18 +9,6 @@
     GOROOT: "{{ go_location }}"
   with_items: "{{ go_get }}"
 
-- name: "GoPM | Link binaries"
-  become: yes
-  become_user: root
-  file:
-    src: "{{ go_location }}/bin/bin/{{ item.name }}"
-    dest: "{{ go_location }}/bin/{{ item.name }}"
-    state: link
-    mode: 0755
-    owner: "{{ fubarhouse_user }}"
-    force: yes
-  with_items: "{{ go_get }}"
-
 - name: "GoPM | Install packages for static installs"
   become: yes
   become_user: "{{ fubarhouse_user }}"

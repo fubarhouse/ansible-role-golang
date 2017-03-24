@@ -23,7 +23,7 @@
     - regex: "export GOPATH={{ go_location }}/bin"
       lineinfile: "export GOPATH={{ go_location }}/bin"
     - regex: export PATH=\$PATH:\$GOROOT/bin
-      lineinfile: export PATH=$PATH:$GOROOT/bin
+      lineinfile: export PATH=$PATH:$GOPATH/bin
   when: shell_exports_static is undefined
 
 - name: "Go-Lang | Ensure shell profiles are clean"
