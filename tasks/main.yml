@@ -26,4 +26,4 @@
     dest: "{{ go_location }}"
     owner: "{{ fubarhouse_user }}"
     mode: 0775
-    recurse: yes
+    recurse: no
