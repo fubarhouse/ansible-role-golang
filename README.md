@@ -65,6 +65,11 @@ gopm_packages:
 - math
 ````
 
+To ensure all packages are removed before running the play, you can use the go_reget variable:
+````
+go_reget: true
+````
+
 To add/change the shell profiles to configure, use the `shell_profiles` array.
 ````
 shell_profiles:
