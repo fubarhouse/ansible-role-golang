@@ -1,14 +1,24 @@
 ---
 
-- name: "GoPM | Check folder permissions/state"
+- name: "Go-Lang | Define list of package directories"
+  set_fact:
+    go_package_locations:
+    - "{{ go_location }}/bin/bin"
+    - "{{ go_location }}/bin/pkg"
+    - "{{ go_location }}/bin/src"
+  when: go_reget == true
+
+- name: "Go-Lang | Remove installed workspace packages"
   become: yes
-  become_user: "root"
+  become_user: "{{ fubarhouse_user }}"
   file:
-    path: "{{ go_location }}/modules"
-    state: directory
-    mode: 0755
-    owner: "{{ fubarhouse_user }}"
-    recurse: yes
+    path: "{{ item }}"
+    state: absent
+  with_items: "{{ go_package_locations }}"
+  ignore_errors: yes
+  when:
+    - go_reget == true
+    - go_package_locations is defined
 
 - name: "GoPM | Include tasks for static install"
   include: "gopm-static.yml"

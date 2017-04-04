@@ -6,6 +6,7 @@ go_install_flag: "--binary"
 go_custom_mirror: https://storage.googleapis.com/golang
 
 # Go
+go_reget: false
 go_install_clean: false
 go_version: go1.8
 go_versions: []
