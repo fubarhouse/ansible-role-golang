@@ -16,8 +16,6 @@
       path: /home/travis/temp
       state: directory
       mode: 0777
-      group: travis
-      owner: travis
   - name: Update apt cache.
     apt:
       update_cache: yes
