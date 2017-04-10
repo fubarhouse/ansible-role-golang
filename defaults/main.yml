@@ -8,6 +8,7 @@ go_version: 1.8.1
 go_location: "{{ shell_home_dir.stdout }}/go"
 go_custom_mirror: https://storage.googleapis.com/golang
 install_go_from_source: false
+go_temporary_dir: /tmp
 
 # Go get
 go_get:
