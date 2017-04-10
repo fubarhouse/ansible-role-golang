@@ -10,7 +10,7 @@
     git_version: 2.9.3
     go_version: 1.8.1
     go_location: /home/travis/go
-    go_temporary_dir: /home/travis
+    go_temporary_dir: /home/travis/temp
   pre_tasks:
   - name: Update apt cache.
     apt:
