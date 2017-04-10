@@ -34,9 +34,6 @@
   register: go_binary
   failed_when: false
 
-- debug:
-    msg: "{{ go_binary }}"
-
 - name: "Go-Lang | Define GOROOT"
   set_fact:
     GOROOT: "{{ go_location }}"

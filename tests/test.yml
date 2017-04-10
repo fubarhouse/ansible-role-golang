@@ -13,6 +13,9 @@
     go_temporary_dir: /home/travis/temp
   pre_tasks:
   - file:
+      path: /home/travis/go
+      state: absent
+  - file:
       path: /home/travis/temp
       state: directory
       mode: 0777

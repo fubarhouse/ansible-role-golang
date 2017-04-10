@@ -14,9 +14,6 @@
     - current_go_version is undefined or "go version go{{ go_version }} {{ go_os }}/{{ go_arch }}" not in current_go_version.stdout
     - install_go_from_source == false
 
-- debug:
-    msg: "{{ current_go_version.stdout }}"
-
 # - name: "Include tasks for installation from source"
 #   include: install-source.yml
 #   when: install_go_from_source == true
