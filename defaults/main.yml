@@ -9,7 +9,6 @@ go_custom_mirror: https://storage.googleapis.com/golang
 go_reget: false
 go_install_clean: false
 go_versions: []
-go_arch: linux-amd64
 go_location: "{{ shell_home_dir }}/go"
 go_symlink: "{{ go_location }}/bin/go"
 go_url: "{{ go_custom_mirror }}/go{{ go_version }}.{{ go_arch }}.tar.gz"
