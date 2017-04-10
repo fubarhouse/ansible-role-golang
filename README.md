@@ -1,3 +1,4 @@
+[![Golang Gopher](https://github.com/fubarhouse/ansible-role-golang/raw/master/gopher.jpg)](https://golang.org/)
 # Ansible Role: Go
 
 [![Build Status](https://travis-ci.org/fubarhouse/ansible-role-golang.svg?branch=master)](https://travis-ci.org/fubarhouse/ansible-role-golang)
