@@ -31,6 +31,9 @@
     user:
       name: travis
       state: present
+  - file:
+      path: /home/travis/go
+      state: absent
   roles:
   - fubarhouse.commons
   - role_under_test
