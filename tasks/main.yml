@@ -1,29 +1,25 @@
 ---
-# tasks file for fubarhouse-golang
+# main tasks file for fubarhouse-golang
 
-- name: "Include tasks for a clean installation"
+- name: "Include tasks gathering system information"
+  include: setup.yml
+
+- name: "Include tasks to clean installation"
   include: cleanup.yml
   when: go_install_clean == true
 
-- name: "Include tasks for a static installation"
-  include: install-static.yml
-  when: go_install_type == "static"
+- name: "Include tasks for installation"
+  include: install.yml
+  when:
+    - current_go_version is undefined or "go version go{{ go_version }} {{ go_os }}/{{ go_arch }}" not in current_go_version.stdout
+    - install_go_from_source == false
 
-- name: "Include tasks for a source install via GVM"
-  include: install-gvm.yml
-  when: go_install_type == "source"
+- debug:
+    msg: "{{ current_go_version.stdout }}"
 
-- name: "Include tasks for a dynamic installation via GVM"
-  include: install-gvm.yml
-  when: go_install_type == "gvm"
+# - name: "Include tasks for installation from source"
+#   include: install-source.yml
+#   when: install_go_from_source == true
 
-- name: "Include tasks for GoPM packages"
-  include: gopm.yml
-  when: go_install_type == "gvm" or go_install_type == "source" or go_install_type == "static"
-
-- name: "Reset Go permissions"
-  file:
-    dest: "{{ go_location }}"
-    owner: "{{ fubarhouse_user }}"
-    mode: 0775
-    recurse: no
+- name: "Include tasks for Go Get"
+  include: go-get.yml

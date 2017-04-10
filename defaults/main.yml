@@ -1,27 +1,13 @@
 ---
 # defaults file for fubarhouse-golang
 
-go_install_type: static
-go_install_flag: "--binary"
-go_custom_mirror: https://storage.googleapis.com/golang
-
 # Go
 go_reget: false
 go_install_clean: false
-go_versions: []
-go_location: "{{ shell_home_dir }}/go"
-go_symlink: "{{ go_location }}/bin/go"
-go_url: "{{ go_custom_mirror }}/go{{ go_version }}.{{ go_arch }}.tar.gz"
-
-# GVM-Specific variables
-GVM_DEST: "{{ go_location }}"
-GVM_ROOT: "{{ go_location }}"
-GVM_NAME: "gvm"
-gvm_dependencies: []
-
-# For MacOS Static installs only:
-#go_arch: debian-amd64
 go_version: 1.8.1
+go_location: "{{ shell_home_dir.stdout }}/go"
+go_custom_mirror: https://storage.googleapis.com/golang
+install_go_from_source: false
 
 # Go get
 go_get:
@@ -29,9 +15,6 @@ go_get:
   url: github.com/gpmgo/gopm
 - name: golint
   url: github.com/golang/lint/golint
-
-# Packages
-gopm_packages: []
 
 # Configuration
 shell_profiles:

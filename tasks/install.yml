@@ -1,0 +1,97 @@
+---
+- name: "Go-Lang | Define shell exports"
+  set_fact:
+    shell_exports:
+    - regex: "export GOROOT={{ GOROOT }}"
+      lineinfile: "export GOROOT={{ GOROOT }}"
+    - regex: "export GOPATH={{ GOPATH }}/bin"
+      lineinfile: "export GOPATH={{ GOPATH }}/bin"
+    - regex: "export PATH=$PATH:{{ GOPATH }}/bin"
+      lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
+  when: shell_exports is undefined
+
+- name: "Go-Lang | Get distribution"
+  become: yes
+  become_user: root
+  get_url:
+    url: "{{ go_url }}"
+    dest: "/tmp/go{{ go_version }}.{{ go_os }}-{{ go_arch }}.tar.gz"
+    validate_certs: no
+
+- name: "Go-Lang | Ensure directory is writable"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ GOROOT }}"
+    state: directory
+    owner: "{{ fubarhouse_user }}"
+    mode: 0755
+    recurse: true
+
+- name: "Go-Lang | Unpack distribution"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  unarchive:
+    src: "/tmp/go{{ go_version }}.{{ go_os }}-{{ go_arch }}.tar.gz"
+    dest: "/tmp"
+    copy: "no"
+
+- name: "Go-Lang | Moving to installation directory"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  synchronize:
+    src: "/tmp/go/"
+    dest: "{{ GOROOT }}"
+    delete: yes
+    recursive: yes
+  delegate_to: "{{ inventory_hostname }}"
+  when: ansible_ssh_user is undefined
+
+- name: "Go-Lang | Moving to installation directory"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "cp -rf /tmp/go/* {{ GOROOT }}/"
+  when: ansible_ssh_user is defined
+
+- name: "Go-Lang | Remove temporary data"
+  become: yes
+  become_user: root
+  file:
+    path: "/tmp/go/"
+    state: absent
+
+- name: "Go-Lang | Ensure shell profiles are available"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  file:
+    path: "{{ fubarhouse_user_dir }}/{{ item }}"
+    state: touch
+  with_items: "{{ shell_profiles }}"
+  failed_when: false
+  when: shell_exports is defined
+
+- name: "Go-Lang | Ensure shell profiles are configured"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  lineinfile:
+    dest: "{{ fubarhouse_user_dir }}/{{ item[0] }}"
+    regexp: "{{ item[1].regex }}"
+    line: "{{ item[1].lineinfile }}"
+    state: present
+  with_nested:
+  - "{{ shell_profiles }}"
+  - "{{ shell_exports }}"
+  ignore_errors: yes
+  when: shell_exports is defined
+
+- name: "Go-Lang | Verify version"
+  shell: "export GOROOT={{ GOROOT }}; export GOPATH={{ GOPATH }}/bin; {{ GOPATH }}/go version"
+  register: go_version_output
+  failed_when: '"{{ go_version }}" not in "{{ go_version_output.stdout }}"'
+
+- name: "Go-Lang | Restart shell"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "source {{ fubarhouse_user_dir }}/{{ item }}"
+  with_items: "{{ shell_profiles }}"
+  failed_when: false
