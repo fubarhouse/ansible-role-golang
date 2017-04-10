@@ -18,6 +18,13 @@
     dest: "{{ go_temporary_dir }}/go{{ go_version }}.{{ go_os }}-{{ go_arch }}.tar.gz"
     validate_certs: no
 
+- name: "Go-Lang | Empty destination directory"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ GOROOT }}"
+    state: absent
+
 - name: "Go-Lang | Ensure directory is writable"
   become: yes
   become_user: root
