@@ -1,0 +1,55 @@
+---
+
+# Define system-specific variables for fubarhouse.golang.
+
+- name: "Go-Lang | Define GOARCH for amd64 systems"
+  set_fact:
+    go_arch: "amd64"
+  when:
+    - ansible_architecture == "x86_64"
+    - go_arch is not defined
+
+- name: "Go-Lang | Define GOOS for darwin systems"
+  set_fact:
+    go_os: "darwin"
+  when:
+    - ansible_distribution == "darwin"
+    - go_os is not defined
+
+- name: "Go-Lang | Define GOOS for linux systems"
+  set_fact:
+    go_os: "linux"
+  when:
+    - ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu'
+    - go_os is not defined
+
+- name: "Go-Lang | Define URL for distribution"
+  set_fact:
+    go_url: "{{ go_custom_mirror }}/go{{ go_version }}.{{ go_os }}-{{ go_arch }}.tar.gz"
+
+- name: "Go-Lang | Looking for existing installation"
+  stat:
+    path: "{{ go_location }}/bin/go"
+  register: go_binary
+
+- debug:
+    msg: "{{ go_binary }}"
+
+- name: "Go-Lang | Define GOROOT"
+  set_fact:
+    GOROOT: "{{ go_location }}"
+
+- name: "Go-Lang | Define GOPATH"
+  set_fact:
+    GOPATH: "{{ go_location }}/bin"
+
+- name: "Go-Lang | Getting version information"
+  become: yes
+  become_user: "root"
+  shell: "{{ GOPATH }}/go version"
+  environment:
+    GOPATH: "{{ GOPATH }}"
+    GOROOT: "{{ GOROOT }}"
+  register: current_go_version
+  changed_when: false
+  when: go_binary.stat.exists == true
