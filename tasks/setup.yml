@@ -6,21 +6,22 @@
   set_fact:
     go_arch: "amd64"
   when:
-    - ansible_architecture == "x86_64"
+    - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'FreeBSD' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
     - go_arch is not defined
 
-- name: "Go-Lang | Define GOOS for darwin systems"
+- name: "Go-Lang | Define GOOS for Darwin systems"
   set_fact:
     go_os: "darwin"
   when:
-    - ansible_distribution == "darwin"
+    - ansible_os_family == 'Darwin'
+    - ansible_distribution == 'MacOSX'
     - go_os is not defined
 
 - name: "Go-Lang | Define GOOS for linux systems"
   set_fact:
     go_os: "linux"
   when:
-    - ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu'
+    - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'FreeBSD' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
     - go_os is not defined
 
 - name: "Go-Lang | Define URL for distribution"
