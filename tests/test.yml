@@ -33,6 +33,7 @@
     - rsync
     - openssh-server
     - openssh-client
+    - python-dev
     failed_when: false
   - name: add travis
     user:
