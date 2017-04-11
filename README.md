@@ -10,7 +10,6 @@
 * Installs a Go workspace
 * Installs from mirror URL
 * Installs to any location
-* x86 architecture is not currently supported. (See [#37](https://github.com/fubarhouse/ansible-role-golang/issues/37))
 
 ## Requirements
 

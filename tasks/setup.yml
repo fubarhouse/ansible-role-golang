@@ -2,7 +2,14 @@
 
 # Define system-specific variables for fubarhouse.golang.
 
-- name: "Go-Lang | Define GOARCH for amd64 systems"
+- name: "Go-Lang | Define GOARCH for 32-bit systems"
+  set_fact:
+    GOARCH: "386"
+  when:
+    - 'i386' in ansible_architecture
+    - GOARCH is not defined
+
+- name: "Go-Lang | Define GOARCH for 64-bit systems"
   set_fact:
     GOARCH: "amd64"
   when:
