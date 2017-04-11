@@ -28,11 +28,11 @@
   - name: Install dependencies
     package:
       name: "{{ item }}"
-      state: present
+      state: installed
     with_items:
     - rsync
     - openssh-server
-    - openssh-client
+#    - openssh-client
     - python-dev
     - unzip
     failed_when: false
