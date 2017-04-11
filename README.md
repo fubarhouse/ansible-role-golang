@@ -54,6 +54,11 @@ shell_profiles:
 - .bash_profile
 ````
 
+To clean up an installation completely prior to role execution:
+````
+go_install_clean: true
+````
+
 ## Dependencies
 
 None.
@@ -71,9 +76,6 @@ None.
 * Install using `ansible-galaxy install fubarhouse.golang`
 * Add this role to your playbook.
 * Modify above variables as desired.
-* Whenever changes/upgrades are required, it's ****recommended**** to either:
-  * set `go_install_clean` to `true` (boolean) in order to perform a clean installation; or
-  * simply rerun with the changed variables in order to relink the symlinks to the default go version - otherwise the symlinks to `go_get` packages will always point to their original destination.
 
 ## License
 
