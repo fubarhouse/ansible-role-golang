@@ -6,10 +6,11 @@
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-fubarhouse--golang-5140.svg)](https://galaxy.ansible.com/fubarhouse/golang)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/fubarhouse/ansible-role-golang/master/LICENSE)
 
-* Clean installs optional
-* Installs a Go workspace
-* Installs from mirror URL
-* Installs to any location
+* Installs the Google [Go](https://golang.org/) programming language
+* Install configurations are entirely automatic
+* Install configurations can be manually set
+* Installs from configurable mirror
+* Installs optional packages using `go get`
 
 ## Requirements
 
