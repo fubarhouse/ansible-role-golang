@@ -16,7 +16,7 @@ env:
   #   init: /sbin/init
   #   run_opts: "--privileged"
   - distro: centos6
-    init: ""
+    init: "/sbin/init"
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   - distro: centos7
     init: /usr/lib/systemd/systemd
