@@ -13,12 +13,8 @@
     go_temporary_dir: /home/travis/temp
   pre_tasks:
   - file:
-      path: /home/travis/go
-      state: absent
-  - file:
       path: /home/travis/temp
       state: directory
-      mode: 0777
   - name: Update apt cache.
     apt:
       update_cache: yes
@@ -43,9 +39,6 @@
     user:
       name: travis
       state: present
-  - file:
-      path: /home/travis/go
-      state: absent
   roles:
   - geerlingguy.git
   - fubarhouse.commons
