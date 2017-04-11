@@ -47,6 +47,6 @@
       path: /home/travis/go
       state: absent
   roles:
-  # - geerlingguy.git
+  - geerlingguy.git
   - fubarhouse.commons
   - role_under_test
