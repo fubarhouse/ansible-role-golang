@@ -1,27 +1,23 @@
 galaxy_info:
   author: Karl Hepworth
-  description: Installs the Go language, including any configured packages and binaries.
+  description: Install Golang and global packages!
   license: MIT
   min_ansible_version: 2.0
   platforms:
-  #- name: MacOSX
-  #  versions:
-  #  - all
-  #  - 10.10
-  #  - 10.11
-  #  - 10.12
-  #  - 10.7
-  #  - 10.8
-  #  - 10.9
+  - name: MacOSX
+    versions:
+    - all
   - name: Ubuntu
     versions:
-    - precise
     - trusty
     - xenial
   - name: EL
     versions:
-  #  - 6
+    - 6
     - 7
+  - name: Debian
+    versions:
+    - 8
   galaxy_tags:
   - go
   - development
