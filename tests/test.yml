@@ -13,8 +13,15 @@
     go_temporary_dir: /home/travis/temp
   pre_tasks:
   - file:
+      path: /home/travis/go
+      state: absent
+    when:
+      - delete_once is defined
+      - delete_once == true
+  - file:
       path: /home/travis/temp
       state: directory
+      mode: 0777
   - name: Update apt cache.
     apt:
       update_cache: yes
