@@ -9,14 +9,9 @@
     git_install_from_source_force_update: true
     git_version: 2.9.3
     go_version: 1.8.1
-    go_location: /home/travis/go
+    go_location: /home/travis/go_travis_test
     go_temporary_dir: /home/travis/temp
   pre_tasks:
-  - file:
-      path: /home/travis/go
-      state: absent
-    when:
-      - delete_once is defined
   - file:
       path: /home/travis/temp
       state: directory
