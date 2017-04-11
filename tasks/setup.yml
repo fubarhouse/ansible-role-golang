@@ -13,7 +13,7 @@
   set_fact:
     GOARCH: "amd64"
   when:
-    - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'FreeBSD' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
+    - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
     - GOARCH is not defined
 
 - name: "Go-Lang | Define GOOS for Darwin systems"
@@ -24,11 +24,18 @@
     - ansible_distribution == 'MacOSX'
     - GOOS is not defined
 
+- name: "Go-Lang | Define GOOS for FreeBSD systems"
+  set_fact:
+    GOOS: "freebsd"
+  when:
+    - ansible_distribution == 'FreeBSD'
+    - GOOS is not defined
+
 - name: "Go-Lang | Define GOOS for linux systems"
   set_fact:
     GOOS: "linux"
   when:
-    - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'FreeBSD' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
+    - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
     - GOOS is not defined
 
 - name: "Go-Lang | Define URL for distribution"
