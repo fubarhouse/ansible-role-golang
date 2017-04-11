@@ -6,7 +6,7 @@
   set_fact:
     GOARCH: "386"
   when:
-    - 'i386' in ansible_architecture
+    - '386' in ansible_architecture
     - GOARCH is not defined
 
 - name: "Go-Lang | Define GOARCH for 64-bit systems"
