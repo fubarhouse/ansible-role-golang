@@ -52,7 +52,7 @@ script:
   - 'docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --sudo -vvvv'
 
   # Test role idempotence.
-  - idempotence=$(container_id)
+  - idempotence=$(mktemp)
   - >
     docker exec "$(cat ${container_id})"
     ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --sudo -vvvv
