@@ -1,4 +1,4 @@
-[![Golang Gopher](https://github.com/fubarhouse/ansible-role-golang/raw/master/gopher.jpg)](https://golang.org/)
+[![Golang Gopher](https://github.com/fubarhouse/ansible-role-golang/raw/master/gopher.png)](https://golang.org/)
 # Ansible Role: Go
 
 [![Build Status](https://travis-ci.org/fubarhouse/ansible-role-golang.svg?branch=master)](https://travis-ci.org/fubarhouse/ansible-role-golang)
@@ -77,3 +77,5 @@ MIT / BSD
 ## Author Information
 
 This role was created in 2016 by [Karl Hepworth](https://twitter.com/fubarhouse).
+
+Image of Go's mascot was created by [Takuya Ueda](https://twitter.com/tenntenn). Licenced under the Creative Commons 3.0 Attributions license. This image has been resized for purpose, but is otherwise unchanged.
