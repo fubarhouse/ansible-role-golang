@@ -26,8 +26,13 @@ go_custom_mirror: https://storage.googleapis.com/golang
 Basic configuration
 ````
 go_version: 1.8.1
-go_location: /home/vagrant/go
+GOROOT: /home/vagrant/go
+````
 
+Optional configuration
+````
+GOOS: darwin
+GOARCH: amd64
 ````
 
 To install `go get` binaries/projects, add them to `go_get`

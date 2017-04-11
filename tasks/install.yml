@@ -15,7 +15,7 @@
   become_user: root
   get_url:
     url: "{{ go_url }}"
-    dest: "{{ go_temporary_dir }}/go{{ go_version }}.{{ go_os }}-{{ go_arch }}.tar.gz"
+    dest: "{{ go_temporary_dir }}/go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}.tar.gz"
     validate_certs: no
 
 - name: "Go-Lang | Empty destination directory"
@@ -39,7 +39,7 @@
   become: yes
   become_user: "{{ fubarhouse_user }}"
   unarchive:
-    src: "{{ go_temporary_dir }}/go{{ go_version }}.{{ go_os }}-{{ go_arch }}.tar.gz"
+    src: "{{ go_temporary_dir }}/go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}.tar.gz"
     dest: "{{ go_temporary_dir }}"
     copy: "no"
 

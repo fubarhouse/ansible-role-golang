@@ -4,43 +4,47 @@
 
 - name: "Go-Lang | Define GOARCH for amd64 systems"
   set_fact:
-    go_arch: "amd64"
+    GOARCH: "amd64"
   when:
     - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'FreeBSD' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
-    - go_arch is not defined
+    - GOARCH is not defined
 
 - name: "Go-Lang | Define GOOS for Darwin systems"
   set_fact:
-    go_os: "darwin"
+    GOOS: "darwin"
   when:
     - ansible_os_family == 'Darwin'
     - ansible_distribution == 'MacOSX'
-    - go_os is not defined
+    - GOOS is not defined
 
 - name: "Go-Lang | Define GOOS for linux systems"
   set_fact:
-    go_os: "linux"
+    GOOS: "linux"
   when:
     - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'FreeBSD' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
-    - go_os is not defined
+    - GOOS is not defined
 
 - name: "Go-Lang | Define URL for distribution"
   set_fact:
-    go_url: "{{ go_custom_mirror }}/go{{ go_version }}.{{ go_os }}-{{ go_arch }}.tar.gz"
+    go_url: "{{ go_custom_mirror }}/go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}.tar.gz"
 
 - name: "Go-Lang | Looking for existing installation"
   stat:
-    path: "{{ go_location }}/bin/go"
+    path: "{{ GOROOT }}/bin/go"
   register: go_binary
   failed_when: false
 
 - name: "Go-Lang | Define GOROOT"
   set_fact:
-    GOROOT: "{{ go_location }}"
+    GOROOT: "{{ GOROOT }}"
+  when: GOROOT is defined
 
 - name: "Go-Lang | Define GOPATH"
   set_fact:
-    GOPATH: "{{ go_location }}/bin"
+    GOPATH: "{{ GOROOT }}/bin"
+  when:
+    - GOPATH is not defined
+    - GOROOT is defined
 
 - name: "Go-Lang | Getting version information"
   become: yes
