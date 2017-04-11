@@ -6,23 +6,22 @@ python:
 services: docker
 
 env:
-  - type: defaults
-    distro: ubuntu1604
+  - distro: ubuntu1604
     init: /sbin/init
     run_opts: "--privileged"
-  - type: defaults
-    distro: ubuntu1404
+  - distro: ubuntu1404
     init: /sbin/init
     run_opts: "--privileged"
   - distro: ubuntu1204
     init: /sbin/init
     run_opts: "--privileged"
-  - type: centos
-    distro: centos7
+  - distro: centos6
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - type: debian
-    distro: debian8
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro: debian8
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
