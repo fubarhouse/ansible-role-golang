@@ -28,3 +28,4 @@
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
   with_items: "{{ go_get }}"
+  changed_when: false
