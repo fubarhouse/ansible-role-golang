@@ -32,9 +32,11 @@
     with_items:
     - rsync
     - openssh-server
-#    - openssh-client
+    - openssh-client
     - python-dev
     - unzip
+    - tar
+    - gzip
     failed_when: false
   - name: add travis
     user:
