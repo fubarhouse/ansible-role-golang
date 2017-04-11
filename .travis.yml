@@ -36,6 +36,10 @@ before_install:
 script:
 
   - container_id=$(mktemp)
+
+  # Remove golang file system prior to execution.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm sudo rm -rf /home/travis/go'
+
   # Run container in detached state.
   - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
