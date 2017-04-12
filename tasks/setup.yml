@@ -58,13 +58,13 @@
   set_fact:
     go_url: "{{ go_custom_mirror }}/go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}.tar.gz"
     go_distribution_filename: "go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}"
-  when: build_go_from_source == false
+  when: build_go_from_source|bool == false
 
 - name: "Go-Lang | Define URL for source"
   set_fact:
     go_url: "{{ go_custom_mirror }}/go{{ go_version }}.src.tar.gz"
     go_distribution_filename: "go{{ go_version }}.src"
-  when: build_go_from_source == true
+  when: build_go_from_source|bool == true
 
 - name: "Go-Lang | Looking for existing installation"
   stat:
