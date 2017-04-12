@@ -12,7 +12,6 @@
     GOROOT: /home/travis/go_travis_test
     GOPATH: /home/travis/go_travis_test/bin
     go_temporary_dir: /home/travis/temp
-    go_reget: true
   pre_tasks:
   - file:
       path: /home/travis/temp
