@@ -6,7 +6,6 @@ go_reget: false
 go_install_clean: false
 go_version: 1.8.1
 go_custom_mirror: https://storage.googleapis.com/golang
-install_go_from_source: false
 go_temporary_dir: /tmp
 
 GOROOT_BOOTSTRAP: "{{ shell_home_dir.stdout }}/go1.4"
