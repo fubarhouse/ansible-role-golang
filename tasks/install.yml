@@ -33,7 +33,7 @@
    - install_go_bootstrap == true
 
 - name: "Go-Lang | Building Bootstrapper"
-  shell: "cd {{ GOROOT_BOOTSTRAP }}/src && ./all.bash"
+  shell: "cd {{ GOROOT_BOOTSTRAP }}/src && ./{{ go_build_script }}"
   environment:
     GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"
   when:
