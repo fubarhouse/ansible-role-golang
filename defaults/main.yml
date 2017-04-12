@@ -9,6 +9,11 @@ go_custom_mirror: https://storage.googleapis.com/golang
 install_go_from_source: false
 go_temporary_dir: /tmp
 
+GOROOT_BOOTSTRAP: "{{ shell_home_dir.stdout }}/go1.4"
+build_go_from_source: false
+install_go_bootstrap: false
+go_build_script: make.bash
+
 GOROOT: "{{ shell_home_dir.stdout }}/go"
 GOPATH: "{{ GOROOT }}/bin"
 

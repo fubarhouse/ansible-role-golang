@@ -35,6 +35,25 @@ GOOS: darwin
 GOARCH: amd64
 ````
 
+****Building from source****
+
+Golang Bootstrap Workspace
+````
+GOROOT_BOOTSTRAP: /home/vagrant/go1.4
+````
+Boolean to indicate build should be from source.
+````
+build_go_from_source: false
+````
+Boolean to indicate Bootstrap needs installation.
+````
+install_go_bootstrap: false
+````
+Which script should be used when building from source
+````
+go_build_script: make.bash
+````
+
 To install `go get` binaries/projects, add them to `go_get`
 ````
 go_get:
