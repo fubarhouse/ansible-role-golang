@@ -6,7 +6,7 @@
 
 - name: "Include tasks to clean installation"
   include: cleanup.yml
-  when: go_install_clean == true
+  when: go_install_clean|bool == true
 
 - name: "Include tasks for installation"
   include: install.yml

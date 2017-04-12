@@ -12,7 +12,7 @@
     state: absent
   when:
    - GOROOT_BOOTSTRAP is defined
-   - install_go_bootstrap == true
+   - install_go_bootstrap|bool == true
   failed_when: false
 
 - name: "Go-Lang | Define shell exports to cleanup"

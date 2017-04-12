@@ -40,13 +40,13 @@
    - GOROOT_BOOTSTRAP is defined
    - build_go_from_source == true
    - install_go_bootstrap == true
-   - go_binary_bootstrap.stat.exists == false
+   - go_binary_bootstrap.stat.exists|bool == false
 
 - name: "Go-Lang | Get distribution"
   become: yes
   become_user: root
   get_url:
-    url: "{{ go_url }}"
+    url: "{{ go_custom_mirror }}/{{ go_distribution_filename }}.tar.gz"
     dest: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
     validate_certs: no
 
@@ -107,8 +107,8 @@
     GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"
   when:
    - GOROOT_BOOTSTRAP is defined
-   - build_go_from_source == true
-   - install_go_bootstrap == true
+   - build_go_from_source|bool == true
+   - install_go_bootstrap|bool == true
 
 - name: "Go-Lang | Ensure shell profiles are available"
   become: yes
@@ -135,13 +135,17 @@
   when: shell_exports is defined
 
 - name: "Go-Lang | Verify version"
-  shell: "export GOROOT={{ GOROOT }}; export GOPATH={{ GOPATH }}/bin; {{ GOPATH }}/go version"
+  shell: "{{ GOPATH }}/go version"
+  environment:
+    GOROOT: "{{ GOROOT }}"
+    GOPATH: "{{ GOPATH }}"
   register: go_version_output
   failed_when: '"{{ go_version }}" not in "{{ go_version_output.stdout }}"'
+  changed_when: false
 
 - name: "Go-Lang | Restart shell"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  shell: "source {{ fubarhouse_user_dir }}/{{ item }}"
+  shell: "{{ fubarhouse_user_dir }}/{{ item }}"
   with_items: "{{ shell_profiles }}"
   failed_when: false
