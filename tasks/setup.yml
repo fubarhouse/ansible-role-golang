@@ -8,6 +8,7 @@
   when:
    - GOROOT_BOOTSTRAP is not defined
    - build_go_from_source|bool == true
+   - shell_home_dir.stdout is defined
 
 - name: "Go-Lang | Looking for compiled binary in GOROOT_BOOTSTRAP installation"
   stat:
