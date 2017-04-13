@@ -15,7 +15,7 @@
     build_go_from_source: true
     install_go_bootstrap: true
     go_temporary_dir: /home/travis/temp
-    go_get: []
+    # go_get: []
   pre_tasks:
   - file:
       path: /home/travis/temp
