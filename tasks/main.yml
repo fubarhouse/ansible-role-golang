@@ -10,7 +10,8 @@
 
 - name: "Include tasks for installation"
   include: install.yml
-  when: current_go_version is undefined or '"{{ expected_go_version_output }}" not in current_go_version.stdout'
+  when: (current_go_version is undefined) or
+        (expected_go_version_output|string not in current_go_version.stdout|string)
 
 - name: "Include tasks for Go Get"
   include: go-get.yml
