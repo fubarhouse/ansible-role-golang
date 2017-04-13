@@ -24,7 +24,7 @@
       lineinfile: "export GOPATH={{ GOPATH }}/bin"
     - regex: "export PATH=$PATH:{{ GOPATH }}/bin"
       lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
-  when: shell_exports is undefined
+  when: shell_exports is not defined
 
 - name: "Go-Lang | Ensure shell profiles are clean"
   become: yes
