@@ -21,8 +21,6 @@
     - go_package_locations is defined
 
 - name: "Go-Lang | Run get commands"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell: "{{ GOPATH }}/go get -u {{ item.url }}"
   environment:
     GOPATH: "{{ GOPATH }}"
