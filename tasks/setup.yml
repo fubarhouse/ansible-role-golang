@@ -4,9 +4,9 @@
 
 - name: "Go-Lang | Define GOROOT_BOOTSTRAP"
   set_fact:
-    GOROOT_BOOTSTRAP: "{{ shell_home_dir.stdout }}/go1.4"
+    GOROOT_BOOTSTRAP: "{{ fubarhouse_user_dir }}/go1.4"
   when:
-   - shell_home_dir is defined
+   - fubarhouse_user_dir is defined
    - GOROOT_BOOTSTRAP is not defined
    - build_go_from_source|bool == true
 
