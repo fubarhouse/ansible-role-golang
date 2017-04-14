@@ -26,7 +26,7 @@
   - name: Install dependencies
     package:
       name: "{{ item }}"
-      state: installed
+      state: latest
     with_items:
     - git
     - rsync
@@ -36,6 +36,7 @@
     - unzip
     - tar
     - gzip
+    - wget
     failed_when: false
   - name: add travis
     user:
