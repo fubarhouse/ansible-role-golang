@@ -18,7 +18,9 @@
     state: directory
     owner: "{{ fubarhouse_user }}"
     mode: 0755
-  when: GOROOT_BOOTSTRAP is defined
+  when:
+   - GOROOT_BOOTSTRAP is defined
+   - install_go_bootstrap == true
 
 - name: "Go-Lang | Get bootstrap distribution"
   git:
@@ -29,7 +31,6 @@
     update: no
   when:
    - GOROOT_BOOTSTRAP is defined
-   - build_go_from_source == true
    - install_go_bootstrap == true
 
 - name: "Go-Lang | Building Bootstrapper"
@@ -38,7 +39,6 @@
     GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"
   when:
    - GOROOT_BOOTSTRAP is defined
-   - build_go_from_source == true
    - install_go_bootstrap == true
    - go_binary_bootstrap.stat.exists|bool == false
 
@@ -108,7 +108,6 @@
   when:
    - GOROOT_BOOTSTRAP is defined
    - build_go_from_source|bool == true
-   - install_go_bootstrap|bool == true
 
 - name: "Go-Lang | Ensure shell profiles are available"
   become: yes
