@@ -6,10 +6,14 @@ go_reget: false
 go_install_clean: false
 go_version: 1.8.1
 go_custom_mirror: https://storage.googleapis.com/golang
-install_go_from_source: false
 go_temporary_dir: /tmp
 
-GOROOT: "{{ shell_home_dir.stdout }}/go"
+GOROOT_BOOTSTRAP: "{{ fubarhouse_user_dir }}/go1.4"
+build_go_from_source: false
+install_go_bootstrap: false
+go_build_script: make.bash
+
+GOROOT: "{{ fubarhouse_user_dir }}/go"
 GOPATH: "{{ GOROOT }}/bin"
 
 # Go get

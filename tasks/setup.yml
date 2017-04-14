@@ -2,6 +2,23 @@
 
 # Define system-specific variables for fubarhouse.golang.
 
+- name: "Go-Lang | Define GOROOT_BOOTSTRAP"
+  set_fact:
+    GOROOT_BOOTSTRAP: "{{ fubarhouse_user_dir }}/go1.4"
+  when:
+   - fubarhouse_user_dir is defined
+   - GOROOT_BOOTSTRAP is not defined
+   - build_go_from_source|bool == true
+
+- name: "Go-Lang | Looking for compiled binary in GOROOT_BOOTSTRAP installation"
+  stat:
+    path: "{{ GOROOT_BOOTSTRAP }}/bin/go"
+  register: go_binary_bootstrap
+  failed_when: false
+  when:
+   - GOROOT_BOOTSTRAP is defined
+   - build_go_from_source|bool == true
+
 - name: "Go-Lang | Define GOARCH for 32-bit systems"
   set_fact:
     GOARCH: "386"
@@ -40,7 +57,13 @@
 
 - name: "Go-Lang | Define URL for distribution"
   set_fact:
-    go_url: "{{ go_custom_mirror }}/go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}.tar.gz"
+    go_distribution_filename: "go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}"
+  when: build_go_from_source|bool == false
+
+- name: "Go-Lang | Define URL for source"
+  set_fact:
+    go_distribution_filename: "go{{ go_version }}.src"
+  when: build_go_from_source|bool == true
 
 - name: "Go-Lang | Looking for existing installation"
   stat:
@@ -69,4 +92,9 @@
     GOROOT: "{{ GOROOT }}"
   register: current_go_version
   changed_when: false
-  when: go_binary.stat.exists == true
+  when: go_binary.stat.exists|bool == true
+
+- name: "Go-Lang | Define expected version output"
+  set_fact:
+    expected_go_version_output: "go version go{{ go_version }} {{ GOOS }}/{{ GOARCH }}"
+  when: expected_go_version_output is not defined

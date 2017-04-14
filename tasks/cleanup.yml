@@ -6,6 +6,15 @@
     state: absent
   failed_when: false
 
+- name: "Go-Lang | Removing GOBOOTSTRAP"
+  file:
+    path: "{{ GOROOT_BOOTSTRAP }}"
+    state: absent
+  when:
+   - GOROOT_BOOTSTRAP is defined
+   - install_go_bootstrap|bool == true
+  failed_when: false
+
 - name: "Go-Lang | Define shell exports to cleanup"
   set_fact:
     shell_exports:
@@ -15,7 +24,7 @@
       lineinfile: "export GOPATH={{ GOPATH }}/bin"
     - regex: "export PATH=$PATH:{{ GOPATH }}/bin"
       lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
-  when: shell_exports is undefined
+  when: shell_exports is not defined
 
 - name: "Go-Lang | Ensure shell profiles are clean"
   become: yes

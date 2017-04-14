@@ -6,7 +6,7 @@
     - "{{ GOPATH }}/bin"
     - "{{ GOPATH }}/pkg"
     - "{{ GOPATH }}/src"
-  when: go_reget == true
+  when: go_reget|bool == true
 
 - name: "Go-Lang | Remove installed workspace packages"
   become: yes
@@ -17,12 +17,10 @@
   with_items: "{{ go_package_locations }}"
   ignore_errors: yes
   when:
-    - go_reget == true
+    - go_reget|bool == true
     - go_package_locations is defined
 
 - name: "Go-Lang | Run get commands"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell: "{{ GOPATH }}/go get -u {{ item.url }}"
   environment:
     GOPATH: "{{ GOPATH }}"
