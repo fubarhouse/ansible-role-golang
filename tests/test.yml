@@ -59,5 +59,6 @@
       name: travis
       state: present
   roles:
+  - geerlingguy.git
   - fubarhouse.commons
   - role_under_test
