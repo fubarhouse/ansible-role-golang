@@ -52,6 +52,7 @@
     - libssl-dev
     - build-essential
     - gcc
+    - sudo
     failed_when: false
   - name: add travis
     user:
