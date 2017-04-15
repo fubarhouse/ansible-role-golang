@@ -50,6 +50,7 @@
     - python-dev
     - unzip
     - tar
+    - gtar
     - gzip
     - wget
     - gettext-devel
