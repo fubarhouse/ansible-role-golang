@@ -38,6 +38,7 @@
       name: "{{ item }}"
       state: latest
     with_items:
+    - python-dnf
     - git
     - git-svn
     - rsync
@@ -46,6 +47,7 @@
     - python-dev
     - unzip
     - tar
+    - gtar
     - gzip
     - wget
     - gettext-devel

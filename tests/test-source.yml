@@ -42,6 +42,7 @@
       name: "{{ item }}"
       state: installed
     with_items:
+    - python-dnf
     - git
     - git-svn
     - rsync
