@@ -23,12 +23,14 @@
       state: latest
     changed_when: false
     when: ansible_os_family == 'RedHat'
+    failed_when: false
   - name: Update apt cache.
     apt:
       update_cache: yes
       cache_valid_time: 600
     changed_when: false
     when: ansible_os_family == 'Debian'
+    failed_when: false
   - name: Install dependencies
     package:
       name: "{{ item }}"
