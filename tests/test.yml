@@ -17,6 +17,12 @@
       path: /home/travis/temp
       state: directory
       mode: 0777
+  - name: Update yum cache.
+    yum:
+      update_cache: yes
+      state: latest
+    changed_when: false
+    when: ansible_os_family == 'RedHat'
   - name: Update apt cache.
     apt:
       update_cache: yes
@@ -29,6 +35,7 @@
       state: latest
     with_items:
     - git
+    - git-svn
     - rsync
     - openssh-server
     - openssh-client
@@ -37,12 +44,20 @@
     - tar
     - gzip
     - wget
+    - gettext-devel
+    - expat-devel
+    - curl-devel
+    - zlib-devel
+    - perl-devel
+    - openssl-devel
+    - subversion-perl
+    - make
+    - gcc
     failed_when: false
   - name: add travis
     user:
       name: travis
       state: present
   roles:
-  - geerlingguy.git
   - fubarhouse.commons
   - role_under_test
