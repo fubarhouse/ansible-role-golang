@@ -15,10 +15,10 @@ env:
     init: /sbin/init
     run_opts: "--privileged"
     playbook: test.yml
-  # - distro: ubuntu1204
-  #   init: /sbin/init
-  #   run_opts: "--privileged"
-  #   playbook: test.yml
+  - distro: ubuntu1204
+    init: /sbin/init
+    run_opts: "--privileged"
+    playbook: test.yml
   - distro: centos6
     init: "/sbin/init"
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
@@ -45,10 +45,10 @@ env:
     init: /sbin/init
     run_opts: "--privileged"
     playbook: test-source.yml
-  # - distro: ubuntu1204
-  #   init: /sbin/init
-  #   run_opts: "--privileged"
-  #   playbook: test-source.yml
+  - distro: ubuntu1204
+    init: /sbin/init
+    run_opts: "--privileged"
+    playbook: test-source.yml
   - distro: centos6
     init: "/sbin/init"
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"

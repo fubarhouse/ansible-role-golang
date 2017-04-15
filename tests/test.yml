@@ -29,9 +29,11 @@
       state: installed
     with_items:
     - git
+    - git-svn
     - rsync
     - openssh-server
     - openssh-client
+    - python
     - python-dev
     - unzip
     - tar
@@ -42,6 +44,5 @@
       name: travis
       state: present
   roles:
-  - geerlingguy.git
   - fubarhouse.commons
   - role_under_test
