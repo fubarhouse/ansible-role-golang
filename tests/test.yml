@@ -38,6 +38,20 @@
     - unzip
     - tar
     - gzip
+    - gettext-devel
+    - expat-devel
+    - curl-devel
+    - zlib-devel
+    - perl-devel
+    - openssl-devel
+    - subversion-perl
+    - make
+    - libcurl4-gnutls-dev
+    - libexpat1-dev
+    - gettext
+    - libssl-dev
+    - build-essential
+    - gcc
     failed_when: false
   - name: add travis
     user:
