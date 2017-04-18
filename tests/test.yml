@@ -68,8 +68,6 @@
     user:
       name: travis
       state: present
-  - name: echo $PATH
-    shell: echo $PATH
   roles:
   - fubarhouse.commons
   - role_under_test
