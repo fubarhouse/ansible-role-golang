@@ -72,8 +72,11 @@ before_install:
   - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
   # Make an effort to install tar
   - sudo apt-get install tar | cat
-  - sudo yum install tar | cat
-  - sudo dnf install tar | cat
+  - sudo apt-get install gtar | cat
+  - sudo apt-get install unzip | cat
+  - which tar
+  - which gtar
+  - which unzip
 
 script:
 
