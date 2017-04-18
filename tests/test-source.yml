@@ -51,7 +51,7 @@
     - git-svn
     - rsync
     - openssh-server
-    - openssh-client
+    # - openssh-client
     - python-dev
     - unzip
     - tar
