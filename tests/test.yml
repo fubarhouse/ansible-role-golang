@@ -68,13 +68,8 @@
     user:
       name: travis
       state: present
-  - name: add /bin to path
-    lineinfile:
-      dest: /etc/environment
-      state: present
-      backrefs: yes
-      regexp: 'PATH=(["]*)((?!.*?/bin).*?)(["]*)$'
-      line: "PATH=\1\2:/bin\3"
+  - name: echo $PATH
+    shell: echo $PATH
   roles:
   - fubarhouse.commons
   - role_under_test
