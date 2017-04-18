@@ -64,13 +64,13 @@
     - make
     - gcc
     failed_when: false
-  - name: which tar
-    shell: which tar
-    register: which_tar
+  - name: ls bin
+    shell: ls -lah /usr/bin
+    register: ls_bin
     failed_when: false
-  - name: which tar
+  - name: ls bin
     debug:
-      msg: "{{ which_tar }}"
+      msg: "{{ ls_bin }}"
     failed_when: false
   - name: add travis
     user:
