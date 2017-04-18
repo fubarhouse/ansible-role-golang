@@ -64,13 +64,13 @@
     - make
     - gcc
     failed_when: false
-  - name: which unzip
-    shell: which unzip
-    register: which_unzip
+  - name: which tar
+    shell: which tar
+    register: which_tar
     failed_when: false
-  - name: which unzip
+  - name: which tar
     debug:
-      msg: "{{ which_unzip }}"
+      msg: "{{ which_tar }}"
     failed_when: false
   - name: add travis
     user:
