@@ -67,11 +67,7 @@
     - subversion-perl
     - make
     - gcc
-    failed_when: false
-  - name: Install unzip from RPM
-    yum:
-      name: https://oss.oracle.com/el4/unzip/unzip-5.51-10.el5.src.rpm
-      state: installed
+    - zip
     failed_when: false
   - name: add travis
     user:
