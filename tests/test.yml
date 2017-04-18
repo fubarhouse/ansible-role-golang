@@ -69,8 +69,8 @@
     register: ls_bin
     failed_when: false
   - name: ls bin
-    debug:
-      msg: "{{ ls_bin }}"
+    shell: ls -lah /bin
+    register: ls_bin
     failed_when: false
   - name: add travis
     user:
