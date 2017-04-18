@@ -64,18 +64,17 @@
     - make
     - gcc
     failed_when: false
-  - name: ls bin
-    shell: ls -lah /usr/bin
-    register: ls_bin
-    failed_when: false
-  - name: ls bin
-    shell: ls -lah /bin
-    register: ls_bin
-    failed_when: false
   - name: add travis
     user:
       name: travis
       state: present
+  - name: add /bin to path
+    lineinfile:
+      dest: /etc/environment
+      state: present
+      backrefs: yes
+      regexp: 'PATH=(["]*)((?!.*?/bin).*?)(["]*)$'
+      line: "PATH=\1\2:/bin\3"
   roles:
   - fubarhouse.commons
   - role_under_test
