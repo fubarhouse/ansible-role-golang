@@ -64,6 +64,14 @@
     - make
     - gcc
     failed_when: false
+  - name: which unzip
+    shell: which unzip
+    register: which_unzip
+    failed_when: false
+  - name: which unzip
+    debug:
+      msg: "{{ which_unzip }}"
+    failed_when: false
   - name: add travis
     user:
       name: travis
