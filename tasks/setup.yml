@@ -2,6 +2,40 @@
 
 # Define system-specific variables for fubarhouse.golang.
 
+- name: "Go-Lang | Define user variable for ssh use"
+  set_fact:
+    fubarhouse_user: "{{ ansible_ssh_user }}"
+  when: ansible_ssh_user is defined and fubarhouse_user is not defined
+
+- name: "Go-Lang | Define user variable for non-ssh use"
+  set_fact:
+    fubarhouse_user: "{{ ansible_user_id }}"
+  when: ansible_ssh_user is not defined and fubarhouse_user is not defined
+
+- name: "Go-Lang | Get $HOME"
+  shell: "echo $HOME"
+  register: shell_home_dir
+  changed_when: false
+  when: fubarhouse_user_dir is not defined
+
+- name: "Go-Lang | Set $HOME"
+  set_fact:
+    fubarhouse_user_dir: "{{ shell_home_dir.stdout }}"
+  when: fubarhouse_user_dir is not defined
+
+- name: "Go-Lang | Define GOROOT"
+  set_fact:
+    GOROOT: "{{ fubarhouse_user_dir }}/go"
+  when:
+    - GOROOT is not defined
+
+- name: "Go-Lang | Define GOPATH"
+  set_fact:
+    GOPATH: "{{ GOROOT }}/bin"
+  when:
+    - GOROOT is defined
+    - GOPATH is not defined
+
 - name: "Go-Lang | Define GOROOT_BOOTSTRAP"
   set_fact:
     GOROOT_BOOTSTRAP: "{{ fubarhouse_user_dir }}/go1.4"

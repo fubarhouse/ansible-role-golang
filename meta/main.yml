@@ -27,5 +27,4 @@ galaxy_info:
   - compiler
   - package
   - manager
-dependencies:
-  - fubarhouse.commons
+dependencies: []

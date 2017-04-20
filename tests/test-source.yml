@@ -21,13 +21,23 @@
       path: /home/travis/temp
       state: directory
       mode: 0777
+  - name: Update yum cache.
+    yum:
+      update_cache: yes
+      state: latest
+    changed_when: false
+    when: ansible_os_family == 'RedHat'
+    failed_when: false
   - name: Update apt cache.
     apt:
       update_cache: yes
       cache_valid_time: 600
     changed_when: false
     when: ansible_os_family == 'Debian'
+    failed_when: false
   - name: Install dependencies
+    become: yes
+    become_user: root
     package:
       name: "{{ item }}"
       state: installed
@@ -41,7 +51,9 @@
     - python-dev
     - unzip
     - tar
+    - gtar
     - gzip
+    - wget
     - gettext-devel
     - expat-devel
     - curl-devel
@@ -55,7 +67,7 @@
     - gettext
     - libssl-dev
     - build-essential
-    - gcc
+    - zip
     - sudo
     failed_when: false
   - name: add travis
@@ -64,5 +76,4 @@
       state: present
   roles:
   - geerlingguy.git
-  - fubarhouse.commons
   - role_under_test
