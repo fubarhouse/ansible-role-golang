@@ -31,11 +31,6 @@
     changed_when: false
     when: ansible_os_family == 'Debian'
     failed_when: false
-  - name: install packages for ansible support
-    become: yes
-    become_user: root
-    raw: dnf -y -e0 -d0 install python python-dnf
-    failed_when: false
   - name: Install dependencies
     become: yes
     become_user: root
