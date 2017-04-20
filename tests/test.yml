@@ -58,6 +58,7 @@
     - subversion-perl
     - make
     - gcc
+    - sudo
     failed_when: false
   - name: add travis
     user:
