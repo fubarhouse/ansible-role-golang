@@ -74,5 +74,5 @@
       name: travis
       state: present
   roles:
-  - fubarhouse.commons
+  - geerlingguy.git
   - role_under_test
