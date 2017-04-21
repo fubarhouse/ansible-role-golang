@@ -2,11 +2,11 @@
 - name: "Go-Lang | Define shell exports"
   set_fact:
     shell_exports:
-    - regex: "export GOROOT={{ GOROOT }}"
+    - regex: "export GOROOT"
       lineinfile: "export GOROOT={{ GOROOT }}"
-    - regex: "export GOPATH={{ GOPATH }}/bin"
-      lineinfile: "export GOPATH={{ GOPATH }}/bin"
-    - regex: "export PATH=$PATH:{{ GOPATH }}/bin"
+    - regex: "export GOPATH"
+      lineinfile: "export GOPATH={{ GOPATH }}"
+    - regex: "PATH:{{ GOPATH }}/bin"
       lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
   when: shell_exports is not defined
 
@@ -109,29 +109,31 @@
    - GOROOT_BOOTSTRAP is defined
    - build_go_from_source|bool == true
 
-- name: "Go-Lang | Ensure shell profiles are available"
+- name: "Go-Lang | Detect configured shell profiles"
   become: yes
   become_user: "{{ fubarhouse_user }}"
-  file:
+  stat:
     path: "{{ fubarhouse_user_dir }}/{{ item }}"
-    state: touch
-  with_items: "{{ shell_profiles }}"
+  changed_when: false
   failed_when: false
-  when: shell_exports is defined
+  with_items: "{{ shell_profiles }}"
+  register: stat_shell_profiles
+  when: shell_profiles is defined
 
 - name: "Go-Lang | Ensure shell profiles are configured"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   lineinfile:
-    dest: "{{ fubarhouse_user_dir }}/{{ item[0] }}"
+    dest: "{{ item[0].stat.path }}"
     regexp: "{{ item[1].regex }}"
     line: "{{ item[1].lineinfile }}"
     state: present
   with_nested:
-  - "{{ shell_profiles }}"
+  - "{{ stat_shell_profiles.results }}"
   - "{{ shell_exports }}"
-  ignore_errors: yes
-  when: shell_exports is defined
+  when:
+  - shell_profiles is defined
+  - item[0].stat.exists|bool == true
 
 - name: "Go-Lang | Verify version"
   shell: "{{ GOPATH }}/go version"
