@@ -119,8 +119,8 @@
   with_items: "{{ shell_profiles }}"
   register: stat_shell_profiles
   when:
+  - stat_shell_profiles is defined
   - shell_profiles is defined
-  - stat_shell_profiles is not defined
 
 - name: "Go-Lang | Ensure shell profiles are configured"
   become: yes
@@ -134,6 +134,7 @@
   - "{{ stat_shell_profiles.results }}"
   - "{{ shell_exports }}"
   when:
+  - stat_shell_profiles is defined
   - shell_profiles is defined
   - item[0].stat.exists|bool == true
 
