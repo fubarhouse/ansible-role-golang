@@ -118,7 +118,9 @@
   failed_when: false
   with_items: "{{ shell_profiles }}"
   register: stat_shell_profiles
-  when: shell_profiles is defined
+  when:
+  - shell_profiles is defined
+  - stat_shell_profiles is not defined
 
 - name: "Go-Lang | Ensure shell profiles are configured"
   become: yes
