@@ -19,6 +19,7 @@ go_get:
   url: github.com/gpmgo/gopm
 - name: golint
   url: github.com/golang/lint/golint
+go_install: []
 
 # Configuration
 shell_profiles:
