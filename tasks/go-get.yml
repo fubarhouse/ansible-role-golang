@@ -42,4 +42,4 @@
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
-  with_items: "{{ go_get }}"
+  with_items: "{{ go_install }}"
