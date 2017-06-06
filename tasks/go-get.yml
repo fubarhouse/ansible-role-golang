@@ -27,19 +27,3 @@
     GOROOT: "{{ GOROOT }}"
   with_items: "{{ go_get }}"
   changed_when: false
-
-- name: "Go-Lang | Clone packages"
-  git:
-    repo: "{{ item.repo }}"
-    dest: "{{ GOPATH }}/src/{{ item.dest }}"
-    version: "{{ item.version }}"
-    clone: yes
-    update: yes
-  with_items: "{{ go_install }}"
-
-- name: "Go-Lang | Install packages"
-  shell: "{{ GOPATH }}/go install {{ item.dest }}/..."
-  environment:
-    GOROOT: "{{ GOROOT }}"
-    GOPATH: "{{ GOPATH }}"
-  with_items: "{{ go_install }}"
