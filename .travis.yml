@@ -21,7 +21,7 @@ env:
     playbook: test.yml
   - distro: centos6
     init: "/sbin/init"
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: ""
     playbook: test.yml
   - distro: centos7
     init: /usr/lib/systemd/systemd
