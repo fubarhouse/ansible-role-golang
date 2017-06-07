@@ -97,6 +97,8 @@ before_install:
 
   # Pull container.
   - 'docker pull ${docker_user}/docker-${distro}-ansible:latest'
+  # Restart docker.
+  - sudo systemctl restart docker; exit 0
   # List files in /usr & /sbin for debug purposes.
   - ls -lah /usr
   - ls -lah /sbin
