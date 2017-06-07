@@ -32,14 +32,14 @@ env:
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: debian9
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    playbook: test.yml
   - docker_user: geerlingguy
     distro: debian8
     init: /lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    playbook: test.yml
+  - docker_user: fubarhouse
+    distro: debian9
+    init: /sbin/initctl
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test.yml
   # - docker_user: geerlingguy
@@ -81,7 +81,7 @@ env:
     playbook: test-source.yml
   - docker_user: fubarhouse
     distro: debian9
-    init: /lib/systemd/systemd
+    init: /sbin/initctl
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     playbook: test-source.yml
   # - docker_user: geerlingguy
