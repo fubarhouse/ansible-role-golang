@@ -10,84 +10,84 @@ env:
   - docker_user: geerlingguy
     distro: ubuntu1604
     init: /sbin/init
-    run_opts: "--privileged"
+    run_opts: --privileged
     playbook: test.yml
   - docker_user: geerlingguy
     distro: ubuntu1404
     init: /sbin/init
-    run_opts: "--privileged"
+    run_opts: --privileged
     playbook: test.yml
   - docker_user: geerlingguy
     distro: ubuntu1204
     init: /sbin/init
-    run_opts: "--privileged"
+    run_opts: --privileged
     playbook: test.yml
   - docker_user: geerlingguy
     distro: centos6
     init: /usr/sbin/init
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
   - docker_user: geerlingguy
     distro: centos7
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
   - docker_user: geerlingguy
     distro: debian8
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
   - docker_user: fubarhouse
     distro: debian9
     init: /sbin/initctl
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
   # - docker_user: geerlingguy
   #   distro: fedora24
   #   init: /usr/lib/systemd/systemd
-  #   run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  #   run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
   #   playbook: test.yml
 
   # Source installation tests.
   - docker_user: geerlingguy
     distro: ubuntu1604
     init: /sbin/init
-    run_opts: "--privileged"
+    run_opts: --privileged
     playbook: test-source.yml
   - docker_user: geerlingguy
     distro: ubuntu1404
     init: /sbin/init
-    run_opts: "--privileged"
+    run_opts: --privileged
     playbook: test-source.yml
   - docker_user: geerlingguy
     distro: ubuntu1204
     init: /sbin/init
-    run_opts: "--privileged"
+    run_opts: --privileged
     playbook: test-source.yml
   - docker_user: geerlingguy
     distro: centos6
     init: /usr/sbin/init
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test-source.yml
   - docker_user: geerlingguy
     distro: centos7
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test-source.yml
   - docker_user: geerlingguy
     distro: debian8
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test-source.yml
   - docker_user: fubarhouse
     distro: debian9
     init: /sbin/initctl
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test-source.yml
   # - docker_user: geerlingguy
   #   distro: fedora24
   #   init: /usr/lib/systemd/systemd
-  #   run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  #   run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
   #   playbook: test-source.yml
 
 before_install:
