@@ -24,7 +24,7 @@ env:
     playbook: test.yml
   - docker_user: geerlingguy
     distro: centos6
-    init: /usr/sbin/init
+    init: /sbin/init
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
   - docker_user: geerlingguy
@@ -66,7 +66,7 @@ env:
     playbook: test-source.yml
   - docker_user: geerlingguy
     distro: centos6
-    init: /usr/sbin/init
+    init: /sbin/init
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test-source.yml
   - docker_user: geerlingguy
@@ -94,6 +94,9 @@ before_install:
 
   # Pull container.
   - 'docker pull ${docker_user}/docker-${distro}-ansible:latest'
+  # List files in /usr & /sbin for debug purposes.
+  - ls -lah /usr
+  - ls -lah /sbin
 
 script:
 
