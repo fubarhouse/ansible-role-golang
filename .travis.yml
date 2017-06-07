@@ -91,6 +91,9 @@ env:
   #   playbook: test-source.yml
 
 before_install:
+  # Ensure docker is up to date
+  - sudo apt-get update
+  - sudo apt-get install docker-engine
 
   # Pull container.
   - 'docker pull ${docker_user}/docker-${distro}-ansible:latest'
