@@ -47,11 +47,11 @@ env:
     init: /bin/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  # - docker_user: geerlingguy
-  #   distro: fedora24
-  #   init: /usr/lib/systemd/systemd
-  #   run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
-  #   playbook: test.yml
+  - docker_user: fubarhouse
+    distro: fedora24
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
 
   # Source installation tests.
   - docker_user: geerlingguy
@@ -94,11 +94,11 @@ env:
     init: /bin/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test-source.yml
-  # - docker_user: geerlingguy
-  #   distro: fedora24
-  #   init: /usr/lib/systemd/systemd
-  #   run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
-  #   playbook: test-source.yml
+  - docker_user: fubarhouse
+    distro: fedora24
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test-source.yml
 
 before_install:
 
