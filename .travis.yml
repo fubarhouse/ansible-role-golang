@@ -8,7 +8,7 @@ services: docker
 env:
   # Distribution installation tests.
   - docker_user: geerlingguy
-    distro: ubuntu1604
+    distro: ubuntu1204
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
@@ -18,7 +18,22 @@ env:
     run_opts: --privileged
     playbook: test.yml
   - docker_user: geerlingguy
-    distro: ubuntu1204
+    distro: ubuntu1604
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1610
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1704
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1710
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
@@ -60,7 +75,7 @@ env:
 
   # Source installation tests.
   - docker_user: geerlingguy
-    distro: ubuntu1604
+    distro: ubuntu1204
     init: /sbin/init
     run_opts: --privileged
     playbook: test-source.yml
@@ -70,7 +85,22 @@ env:
     run_opts: --privileged
     playbook: test-source.yml
   - docker_user: geerlingguy
-    distro: ubuntu1204
+    distro: ubuntu1604
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test-source.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1610
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test-source.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1704
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test-source.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1710
     init: /sbin/init
     run_opts: --privileged
     playbook: test-source.yml
