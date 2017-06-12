@@ -17,6 +17,16 @@ env:
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1504
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1510
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
   - docker_user: geerlingguy
     distro: ubuntu1604
     init: /sbin/init
@@ -81,6 +91,16 @@ env:
     playbook: test-source.yml
   - docker_user: geerlingguy
     distro: ubuntu1404
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test-source.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1504
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test-source.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1510
     init: /sbin/init
     run_opts: --privileged
     playbook: test-source.yml
