@@ -36,7 +36,7 @@
     become_user: root
     package:
       name: "{{ item }}"
-      state: latest
+      state: installed
     with_items:
     - git
     - git-svn
