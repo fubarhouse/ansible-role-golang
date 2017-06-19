@@ -70,5 +70,6 @@
     user:
       name: travis
       state: present
+    changed_when: false
   roles:
   - role_under_test
