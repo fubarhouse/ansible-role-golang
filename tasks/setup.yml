@@ -122,22 +122,12 @@
 - name: "Go-Lang | Getting version information"
   become: yes
   become_user: "root"
-  shell: "{{ GOPATH }}/go version"
+  shell: "{{ GOPATH }}/go version | cat"
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
   register: current_go_version
-  changed_when: false
-  when: go_binary.stat.exists|bool == true
-
-- name: "Go-Lang | Setting empty version information"
-  shell: "echo {{ GOROOT }}"
-  environment:
-    GOPATH: "{{ GOPATH }}"
-    GOROOT: "{{ GOROOT }}"
-  register: current_go_version
-  changed_when: false
-  when: current_go_version is not defined
+  changed_when: falsegit
 
 - name: "Go-Lang | Define expected version output"
   set_fact:
