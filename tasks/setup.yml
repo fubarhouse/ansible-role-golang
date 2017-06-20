@@ -127,7 +127,7 @@
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
   register: current_go_version
-  changed_when: falsegit
+  changed_when: false
 
 - name: "Go-Lang | Define expected version output"
   set_fact:
