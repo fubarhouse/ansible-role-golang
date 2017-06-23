@@ -32,11 +32,11 @@ env:
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1410
-    init: /sbin/init
-    run_opts: --privileged
-    playbook: nogit-test.yml
+#  - docker_user: fubarhouse
+#    distro: ubuntu1410
+#    init: /sbin/init
+#    run_opts: --privileged
+#    playbook: nogit-test.yml
   - docker_user: fubarhouse
     distro: ubuntu1504
     init: /sbin/init
@@ -129,11 +129,11 @@ env:
     init: /sbin/init
     run_opts: --privileged
     playbook: test-source.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1410
-    init: /sbin/init
-    run_opts: --privileged
-    playbook: nogit-test-source.yml
+#  - docker_user: fubarhouse
+#    distro: ubuntu1410
+#    init: /sbin/init
+#    run_opts: --privileged
+#    playbook: nogit-test-source.yml
   - docker_user: fubarhouse
     distro: ubuntu1504
     init: /sbin/init
@@ -164,11 +164,11 @@ env:
     init: /sbin/init
     run_opts: --privileged
     playbook: test-source.yml
-  - docker_user: geerlingguy
-    distro: centos6
-    init: /sbin/init
-    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
-    playbook: test-source.yml
+#  - docker_user: geerlingguy
+#    distro: centos6
+#    init: /sbin/init
+#    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+#    playbook: test-source.yml
   - docker_user: geerlingguy
     distro: centos7
     init: /usr/lib/systemd/systemd
@@ -204,9 +204,6 @@ before_install:
 
   # Pull container.
   - 'docker pull ${docker_user}/docker-${distro}-ansible:latest'
-  # List files in /usr & /sbin for debug purposes.
-  - ls -lah /usr
-  - ls -lah /sbin
 
 script:
 

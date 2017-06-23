@@ -9,8 +9,17 @@ galaxy_info:
     - all
   - name: Ubuntu
     versions:
-    - trusty
+    - artful
+    - zesty
+    - yakkety
     - xenial
+    - vivid
+    - wily
+#    - utopic
+    - trusty
+    - saucy
+    - raring
+    - quantal
     - precise
   - name: EL
     versions:
@@ -18,7 +27,9 @@ galaxy_info:
     - 7
   - name: Debian
     versions:
+    - wheezy
     - jessie
+    - stretch
   galaxy_tags:
   - go
   - development
