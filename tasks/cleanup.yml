@@ -52,4 +52,5 @@
   - "{{ shell_exports }}"
   when:
   - shell_profiles is defined
+  - shell_exports is defined
   - item[0].stat.exists|bool == true

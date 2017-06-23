@@ -15,3 +15,8 @@
 
 - name: "Include tasks for Go Get"
   include: go-get.yml
+  when: go_get.0 is defined
+
+- name: "Include tasks for Go Install"
+  include: go-install.yml
+  when: go_install.0 is defined

@@ -9,9 +9,14 @@
     git_install_from_source_force_update: true
     git_version: 2.9.3
     go_version: 1.8.1
+    go_custom_mirror: http://golang.org/dl
     GOROOT: /home/travis/go_travis_test
     GOPATH: /home/travis/go_travis_test/bin
+    GOROOT_BOOTSTRAP: /home/travis/go_travis_test_go1.4
+    build_go_from_source: true
+    install_go_bootstrap: true
     go_temporary_dir: /home/travis/temp
+    # go_get: []
   pre_tasks:
   - file:
       path: /home/travis/temp
@@ -63,13 +68,13 @@
     - gettext
     - libssl-dev
     - build-essential
-    - gcc
+    - zip
     - sudo
     failed_when: false
   - name: add travis
     user:
       name: travis
       state: present
+    changed_when: false
   roles:
-  - geerlingguy.git
   - role_under_test
