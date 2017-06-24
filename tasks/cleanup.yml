@@ -22,6 +22,8 @@
       lineinfile: "export GOROOT={{ GOROOT }}"
     - regex: "export GOPATH"
       lineinfile: "export GOPATH={{ GOPATH }}"
+    - regex: "PATH:{{ GOPATH }}"
+      lineinfile: "export PATH=$PATH:{{ GOPATH }}"
     - regex: "PATH:{{ GOPATH }}/bin"
       lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
   when: shell_exports is not defined
