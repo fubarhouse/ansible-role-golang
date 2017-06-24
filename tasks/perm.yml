@@ -1,0 +1,25 @@
+---
+
+- name: "Go-Lang | Set codebase permissions"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ GOROOT }}"
+    state: directory
+    mode: 0755
+    recurse: yes
+  changed_when: false
+
+- name: "Go-Lang | Set workspace permissions"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ GOPATH }}/{{ item }}"
+    state: directory
+    mode: 0755
+    recurse: yes
+  with_items:
+  - src
+  - pkg
+  - bin
+  changed_when: false
