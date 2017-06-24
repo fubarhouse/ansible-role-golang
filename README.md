@@ -78,6 +78,16 @@ To clean up an installation completely prior to role execution:
 ````
 go_install_clean: true
 ````
+### Setting permissions
+**Note**: If you specify insufficient permissions the playbook will treat the following play as a new installation because it will not be able to determine what version is installed. 
+To specify the permissions of the codebase, you can set:
+````
+mode_codebase: 0755
+````
+To specify the permissions of the workspace, you can set:
+````
+mode_workspace: 0755
+````
 
 ## Dependencies
 
