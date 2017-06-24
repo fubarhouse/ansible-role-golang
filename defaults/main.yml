@@ -7,6 +7,8 @@ go_install_clean: false
 go_version: 1.8.3
 go_custom_mirror: https://storage.googleapis.com/golang
 go_temporary_dir: /tmp
+mode_codebase: 0755
+mode_workspace: 0755
 
 
 build_go_from_source: false

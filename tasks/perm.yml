@@ -6,7 +6,7 @@
   file:
     path: "{{ GOROOT }}"
     state: directory
-    mode: 0755
+    mode: "{{ mode_codebase }}"
     recurse: yes
   changed_when: false
 
@@ -16,7 +16,7 @@
   file:
     path: "{{ GOPATH }}/{{ item }}"
     state: directory
-    mode: 0755
+    mode: "{{ mode_workspace }}"
     recurse: yes
   with_items:
   - src
