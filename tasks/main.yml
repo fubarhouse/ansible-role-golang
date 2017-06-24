@@ -20,3 +20,6 @@
 - name: "Include tasks for Go Install"
   include: go-install.yml
   when: go_install.0 is defined
+
+- name: "Include tasks for setting Go permissions"
+  include: perm.yml
