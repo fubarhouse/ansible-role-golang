@@ -16,12 +16,12 @@ env:
     distro: ubuntu1210
     init: /sbin/init
     run_opts: --privileged
-    playbook: nogit-test.yml
+    playbook: test.yml
   - docker_user: fubarhouse
     distro: ubuntu1304
     init: /sbin/init
     run_opts: --privileged
-    playbook: nogit-test.yml
+    playbook: test.yml
   - docker_user: fubarhouse
     distro: ubuntu1310
     init: /sbin/init
@@ -32,11 +32,11 @@ env:
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-#  - docker_user: fubarhouse
-#    distro: ubuntu1410
-#    init: /sbin/init
-#    run_opts: --privileged
-#    playbook: nogit-test.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1410
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
   - docker_user: fubarhouse
     distro: ubuntu1504
     init: /sbin/init
@@ -46,7 +46,7 @@ env:
     distro: ubuntu1510
     init: /sbin/init
     run_opts: --privileged
-    playbook: nogit-test.yml
+    playbook: test.yml
   - docker_user: geerlingguy
     distro: ubuntu1604
     init: /sbin/init
@@ -113,12 +113,12 @@ env:
     distro: ubuntu1210
     init: /sbin/init
     run_opts: --privileged
-    playbook: nogit-test-source.yml
+    playbook: test-source.yml
   - docker_user: fubarhouse
     distro: ubuntu1304
     init: /sbin/init
     run_opts: --privileged
-    playbook: nogit-test-source.yml
+    playbook: test-source.yml
   - docker_user: fubarhouse
     distro: ubuntu1310
     init: /sbin/init
@@ -129,11 +129,11 @@ env:
     init: /sbin/init
     run_opts: --privileged
     playbook: test-source.yml
-#  - docker_user: fubarhouse
-#    distro: ubuntu1410
-#    init: /sbin/init
-#    run_opts: --privileged
-#    playbook: nogit-test-source.yml
+  - docker_user: fubarhouse
+    distro: ubuntu1410
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test-source.yml
   - docker_user: fubarhouse
     distro: ubuntu1504
     init: /sbin/init
@@ -143,7 +143,7 @@ env:
     distro: ubuntu1510
     init: /sbin/init
     run_opts: --privileged
-    playbook: nogit-test-source.yml
+    playbook: test-source.yml
   - docker_user: geerlingguy
     distro: ubuntu1604
     init: /sbin/init
@@ -164,11 +164,11 @@ env:
     init: /sbin/init
     run_opts: --privileged
     playbook: test-source.yml
-#  - docker_user: geerlingguy
-#    distro: centos6
-#    init: /sbin/init
-#    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
-#    playbook: test-source.yml
+  - docker_user: geerlingguy
+    distro: centos6
+    init: /sbin/init
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test-source.yml
   - docker_user: geerlingguy
     distro: centos7
     init: /usr/lib/systemd/systemd
@@ -211,9 +211,6 @@ script:
 
   # Run container in detached state.
   - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${docker_user}/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
-
-  # Install dependencies.
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install geerlingguy.git'
 
   # Ansible syntax check.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check -vvvv'
