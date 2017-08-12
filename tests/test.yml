@@ -11,9 +11,9 @@
 
   pre_tasks:
     - file:
-      path: /home/travis/temp
-      state: directory
-      mode: 0777
+        path: /home/travis/temp
+        state: directory
+        mode: 0777
 
     - name: Update yum cache.
       yum:
