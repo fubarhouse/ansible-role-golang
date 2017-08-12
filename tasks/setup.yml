@@ -2,6 +2,52 @@
 
 # Define system-specific variables for fubarhouse.golang.
 
+- name: "Go-Lang | Install dependencies (CentOS)"
+  yum:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - curl
+    - gcc
+    - git
+    - findutils
+    - make
+    - rsync
+    - tar
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution == "CentOS"
+
+- name: "Go-Lang | Install dependencies (Debian)"
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - curl
+    - gcc
+    - git
+    - findutils
+    - make
+    - rsync
+    - tar
+  when: ansible_os_family == "Debian"
+
+- name: "Go-Lang | Install dependencies (RedHat)"
+  dnf:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - curl
+    - gcc
+    - git
+    - findutils
+    - make
+    - rsync
+    - tar
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "CentOS"
+
 - name: "Go-Lang | Define user variable for ssh use"
   set_fact:
     fubarhouse_user: "{{ ansible_ssh_user }}"
