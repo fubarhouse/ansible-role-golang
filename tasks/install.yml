@@ -44,14 +44,28 @@
    - install_go_bootstrap == true
    - go_binary_bootstrap.stat.exists|bool == false
 
-- name: "Go-Lang | Get distribution"
+- name: "Go-Lang | Clone distribution"
+  git:
+    repo: "https://github.com/golang/go.git"
+    dest: "{{ GOROOT }}"
+    version: "go{{ go_version }}"
+    clone: yes
+    update: no
+    force: yes
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+    - go_git_install|bool == true
+
+- name: "Go-Lang | Download distribution"
   become: yes
   become_user: root
   get_url:
     url: "{{ go_custom_mirror }}/{{ go_distribution_filename }}.tar.gz"
     dest: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
     validate_certs: no
-  when: '"go{{ go_version }}" not in current_go_version'
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+    - go_git_install|bool == true
 
 - name: "Go-Lang | Empty destination directory"
   become: yes
@@ -59,7 +73,9 @@
   file:
     path: "{{ GOROOT }}"
     state: absent
-  when: '"go{{ go_version }}" not in current_go_version'
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+    - go_git_install|bool == false
 
 - name: "Go-Lang | Ensure directory is writable"
   become: yes
@@ -70,7 +86,9 @@
     owner: "{{ fubarhouse_user }}"
     mode: 0755
     recurse: true
-  when: '"go{{ go_version }}" not in current_go_version'
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+    - go_git_install|bool == false
 
 - name: "Go-Lang | Unpack distribution"
   become: yes
@@ -79,7 +97,9 @@
     src: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
     dest: "{{ go_temporary_dir }}"
     copy: "no"
-  when: '"go{{ go_version }}" not in current_go_version'
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+    - go_git_install|bool == false
 
 - name: "Go-Lang | Moving to installation directory"
   become: yes
@@ -93,6 +113,7 @@
   when:
     - ansible_ssh_user is undefined
     - '"go{{ go_version }}" not in current_go_version'
+    - go_git_install|bool == false
 
 - name: "Go-Lang | Moving to installation directory"
   become: yes
@@ -101,6 +122,7 @@
   when:
     - ansible_ssh_user is defined
     - '"go{{ go_version }}" not in current_go_version'
+    - go_git_install|bool == false
 
 - name: "Go-Lang | Remove temporary data"
   become: yes
@@ -108,7 +130,9 @@
   file:
     path: "{{ go_temporary_dir }}/go/"
     state: absent
-  when: '"go{{ go_version }}" not in current_go_version'
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+    - go_git_install|bool == false
 
 - name: "Go-Lang | Build from source"
   shell: "cd {{ GOROOT }}/src && ./{{ go_build_script }}"
