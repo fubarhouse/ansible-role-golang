@@ -22,7 +22,7 @@
     mode: 0755
   when:
    - GOROOT_BOOTSTRAP is defined
-   - install_go_bootstrap == true
+   - install_go_bootstrap|bool == true
 
 - name: "Go-Lang | Get bootstrap distribution"
   git:
@@ -33,7 +33,7 @@
     update: no
   when:
    - GOROOT_BOOTSTRAP is defined
-   - install_go_bootstrap == true
+   - install_go_bootstrap|bool == true
 
 - name: "Go-Lang | Building Bootstrapper"
   shell: "cd {{ GOROOT_BOOTSTRAP }}/src && ./{{ go_build_script }}"
@@ -41,7 +41,7 @@
     GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"
   when:
    - GOROOT_BOOTSTRAP is defined
-   - install_go_bootstrap == true
+   - install_go_bootstrap|bool == true
    - go_binary_bootstrap.stat.exists|bool == false
 
 - name: "Go-Lang | Clone distribution"
@@ -54,6 +54,7 @@
     force: yes
   when:
     - '"go{{ go_version }}" not in current_go_version'
+    - build_go_from_source|bool == true
     - go_git_install|bool == true
 
 - name: "Go-Lang | Download distribution"
@@ -65,6 +66,7 @@
     validate_certs: no
   when:
     - '"go{{ go_version }}" not in current_go_version'
+    - build_go_from_source|bool == true
     - go_git_install|bool == true
 
 - name: "Go-Lang | Empty destination directory"
@@ -75,6 +77,7 @@
     state: absent
   when:
     - '"go{{ go_version }}" not in current_go_version'
+    - build_go_from_source|bool == true
     - go_git_install|bool == false
 
 - name: "Go-Lang | Ensure directory is writable"
@@ -88,6 +91,7 @@
     recurse: true
   when:
     - '"go{{ go_version }}" not in current_go_version'
+    - build_go_from_source|bool == true
     - go_git_install|bool == false
 
 - name: "Go-Lang | Unpack distribution"
@@ -99,6 +103,7 @@
     copy: "no"
   when:
     - '"go{{ go_version }}" not in current_go_version'
+    - build_go_from_source|bool == true
     - go_git_install|bool == false
 
 - name: "Go-Lang | Moving to installation directory"
@@ -113,6 +118,7 @@
   when:
     - ansible_ssh_user is undefined
     - '"go{{ go_version }}" not in current_go_version'
+    - build_go_from_source|bool == true
     - go_git_install|bool == false
 
 - name: "Go-Lang | Moving to installation directory"
@@ -122,6 +128,7 @@
   when:
     - ansible_ssh_user is defined
     - '"go{{ go_version }}" not in current_go_version'
+    - build_go_from_source|bool == true
     - go_git_install|bool == false
 
 - name: "Go-Lang | Remove temporary data"
@@ -132,6 +139,7 @@
     state: absent
   when:
     - '"go{{ go_version }}" not in current_go_version'
+    - build_go_from_source|bool == true
     - go_git_install|bool == false
 
 - name: "Go-Lang | Build from source"
