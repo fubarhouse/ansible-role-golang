@@ -11,6 +11,7 @@
     GOROOT: /home/travis/go_travis_test
     GOPATH: /home/travis/go_travis_test/bin
     GOROOT_BOOTSTRAP: /home/travis/go_travis_test_go1.4
+    go_git_install: true
 
   pre_tasks:
     - file:
