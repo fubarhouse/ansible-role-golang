@@ -8,7 +8,6 @@
     GOROOT: /home/travis/go_travis_test
     GOPATH: /home/travis/go_travis_test/bin
     go_temporary_dir: /home/travis/temp
-    go_git_install: false
 
   pre_tasks:
     - file:

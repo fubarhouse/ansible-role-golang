@@ -12,146 +12,19 @@
       lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
   when: shell_exports is not defined
 
-- name: "Go-Lang | Ensure bootstrap directory is writable"
-  become: yes
-  become_user: root
-  file:
-    path: "{{ GOROOT_BOOTSTRAP }}"
-    state: directory
-    owner: "{{ fubarhouse_user }}"
-    mode: 0755
+- name: "Go-Lang | Include bootstrap tasks"
+  include: install-bootstrap.yml
   when:
-   - GOROOT_BOOTSTRAP is defined
-   - install_go_bootstrap|bool == true
-
-- name: "Go-Lang | Get bootstrap distribution"
-  git:
-    repo: "https://github.com/golang/go.git"
-    dest: "{{ GOROOT_BOOTSTRAP }}"
-    version: "release-branch.go1.4"
-    clone: yes
-    update: no
-  when:
-   - GOROOT_BOOTSTRAP is defined
-   - install_go_bootstrap|bool == true
-
-- name: "Go-Lang | Building Bootstrapper"
-  shell: "cd {{ GOROOT_BOOTSTRAP }}/src && ./{{ go_build_script }}"
-  environment:
-    GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"
-  when:
-   - GOROOT_BOOTSTRAP is defined
    - install_go_bootstrap|bool == true
    - go_binary_bootstrap.stat.exists|bool == false
 
-- name: "Go-Lang | Clone distribution"
-  git:
-    repo: "https://github.com/golang/go.git"
-    dest: "{{ GOROOT }}"
-    version: "go{{ go_version }}"
-    clone: yes
-    update: no
-    force: yes
-  when:
-    - '"go{{ go_version }}" not in current_go_version'
-    - build_go_from_source|bool == true
-    - go_git_install|bool == true
+- name: "Go-Lang | Include source build tasks"
+  include: install-git.yml
+  when: build_go_from_source|bool == true
 
-- name: "Go-Lang | Download distribution"
-  become: yes
-  become_user: root
-  get_url:
-    url: "{{ go_custom_mirror }}/{{ go_distribution_filename }}.tar.gz"
-    dest: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
-    validate_certs: no
-  when:
-    - '"go{{ go_version }}" not in current_go_version'
-    - build_go_from_source|bool == true
-    - go_git_install|bool == true
-
-- name: "Go-Lang | Empty destination directory"
-  become: yes
-  become_user: root
-  file:
-    path: "{{ GOROOT }}"
-    state: absent
-  when:
-    - '"go{{ go_version }}" not in current_go_version'
-    - build_go_from_source|bool == true
-    - go_git_install|bool == false
-
-- name: "Go-Lang | Ensure directory is writable"
-  become: yes
-  become_user: root
-  file:
-    path: "{{ GOROOT }}"
-    state: directory
-    owner: "{{ fubarhouse_user }}"
-    mode: 0755
-    recurse: true
-  when:
-    - '"go{{ go_version }}" not in current_go_version'
-    - build_go_from_source|bool == true
-    - go_git_install|bool == false
-
-- name: "Go-Lang | Unpack distribution"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  unarchive:
-    src: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
-    dest: "{{ go_temporary_dir }}"
-    copy: "no"
-  when:
-    - '"go{{ go_version }}" not in current_go_version'
-    - build_go_from_source|bool == true
-    - go_git_install|bool == false
-
-- name: "Go-Lang | Moving to installation directory"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  synchronize:
-    src: "{{ go_temporary_dir }}/go/"
-    dest: "{{ GOROOT }}"
-    delete: yes
-    recursive: yes
-  delegate_to: "{{ inventory_hostname }}"
-  when:
-    - ansible_ssh_user is undefined
-    - '"go{{ go_version }}" not in current_go_version'
-    - build_go_from_source|bool == true
-    - go_git_install|bool == false
-
-- name: "Go-Lang | Moving to installation directory"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
-  shell: "cp -rf {{ go_temporary_dir }}/go/* {{ GOROOT }}/"
-  when:
-    - ansible_ssh_user is defined
-    - '"go{{ go_version }}" not in current_go_version'
-    - build_go_from_source|bool == true
-    - go_git_install|bool == false
-
-- name: "Go-Lang | Remove temporary data"
-  become: yes
-  become_user: root
-  file:
-    path: "{{ go_temporary_dir }}/go/"
-    state: absent
-  when:
-    - '"go{{ go_version }}" not in current_go_version'
-    - build_go_from_source|bool == true
-    - go_git_install|bool == false
-
-- name: "Go-Lang | Build from source"
-  shell: "cd {{ GOROOT }}/src && ./{{ go_build_script }}"
-  environment:
-    GOROOT: "{{ GOROOT }}"
-    GOPATH: "{{ GOPATH }}"
-    GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"
-  when:
-   - GOROOT_BOOTSTRAP is defined
-   - build_go_from_source|bool == true
-   - '"go{{ go_version }}" not in current_go_version'
+- name: "Go-Lang | Include distro install tasks"
+  include: install-distro.yml
+  when: build_go_from_source|bool == false
 
 - name: "Go-Lang | Detect configured shell profiles"
   become: yes

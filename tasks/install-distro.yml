@@ -1,0 +1,71 @@
+---
+
+- name: "Go-Lang | Download distribution"
+  become: yes
+  become_user: root
+  get_url:
+    url: "{{ go_custom_mirror }}/{{ go_distribution_filename }}.tar.gz"
+    dest: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
+    validate_certs: no
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+
+- name: "Go-Lang | Empty destination directory"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ GOROOT }}"
+    state: absent
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+
+- name: "Go-Lang | Ensure directory is writable"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ GOROOT }}"
+    state: directory
+    owner: "{{ fubarhouse_user }}"
+    mode: 0755
+    recurse: true
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+
+- name: "Go-Lang | Unpack distribution"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  unarchive:
+    src: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
+    dest: "{{ go_temporary_dir }}"
+    copy: "no"
+  when:
+    - '"go{{ go_version }}" not in current_go_version'
+
+- name: "Go-Lang | Moving to installation directory"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  synchronize:
+    src: "{{ go_temporary_dir }}/go/"
+    dest: "{{ GOROOT }}"
+    delete: yes
+    recursive: yes
+  delegate_to: "{{ inventory_hostname }}"
+  when:
+    - ansible_ssh_user is undefined
+    - '"go{{ go_version }}" not in current_go_version'
+
+- name: "Go-Lang | Moving to installation directory"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "cp -rf {{ go_temporary_dir }}/go/* {{ GOROOT }}/"
+  when:
+    - ansible_ssh_user is defined
+    - '"go{{ go_version }}" not in current_go_version'
+
+- name: "Go-Lang | Remove temporary data"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ go_temporary_dir }}/go/"
+    state: absent
+  when: '"go{{ go_version }}" not in current_go_version'
