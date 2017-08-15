@@ -8,8 +8,6 @@
     clone: yes
     update: no
     force: yes
-  when:
-    - '"go{{ go_version }}" not in current_go_version'
 
 - name: "Go-Lang | Build from source"
   shell: "cd {{ GOROOT }}/src && ./{{ go_build_script }}"
@@ -17,6 +15,3 @@
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
     GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"
-  when:
-   - GOROOT_BOOTSTRAP is defined
-   - '"go{{ go_version }}" not in current_go_version'

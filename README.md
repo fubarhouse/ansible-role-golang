@@ -37,11 +37,6 @@ GOARCH: amd64
 
 ****Building from source****
 
-Install defaults will tell the system to clone the folder from git.
-````
-go_git_install: true
-````
-
 Golang Bootstrap Workspace
 ````
 GOROOT_BOOTSTRAP: /home/vagrant/go1.4
