@@ -4,7 +4,7 @@
 # Go
 go_reget: false
 go_install_clean: false
-go_version: 1.8.3
+go_version: 1.9
 go_custom_mirror: https://storage.googleapis.com/golang
 go_temporary_dir: /tmp
 mode_codebase: 0755

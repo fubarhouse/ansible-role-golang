@@ -4,7 +4,7 @@
   sudo: true
 
   vars:
-    go_version: 1.8.1
+    go_version: 1.9
     build_go_from_source: true
     install_go_bootstrap: true
     go_temporary_dir: /home/travis/temp

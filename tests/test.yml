@@ -4,7 +4,7 @@
   sudo: true
 
   vars:
-    go_version: 1.8.1
+    go_version: 1.9
     GOROOT: /home/travis/go_travis_test
     GOPATH: /home/travis/go_travis_test/bin
     go_temporary_dir: /home/travis/temp
