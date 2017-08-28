@@ -1,8 +1,6 @@
 ---
 
 - name: "Go-Lang | Ensure bootstrap directory is writable"
-  become: yes
-  become_user: root
   file:
     path: "{{ GOROOT_BOOTSTRAP }}"
     state: directory

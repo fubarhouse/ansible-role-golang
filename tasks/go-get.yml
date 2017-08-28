@@ -9,8 +9,6 @@
   when: go_reget|bool == true
 
 - name: "Go-Lang | Remove installed workspace packages"
-  become: yes
-  become_user: "root"
   file:
     path: "{{ item }}"
     state: absent

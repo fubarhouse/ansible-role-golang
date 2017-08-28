@@ -29,8 +29,6 @@
   when: shell_exports is not defined
 
 - name: "Go-Lang | Detect configured shell profiles"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   stat:
     path: "{{ fubarhouse_user_dir }}/{{ item }}"
   changed_when: false
@@ -42,8 +40,6 @@
   - stat_shell_profiles is not defined
 
 - name: "Go-Lang | Ensure shell profiles are clean"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   lineinfile:
     dest: "{{ item[0].stat.path }}"
     regexp: "{{ item[1].regex }}"

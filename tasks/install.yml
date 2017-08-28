@@ -33,8 +33,6 @@
     - '"go{{ go_version }}" not in current_go_version'
 
 - name: "Go-Lang | Detect configured shell profiles"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   stat:
     path: "{{ fubarhouse_user_dir }}/{{ item }}"
   changed_when: false
@@ -46,8 +44,6 @@
   - shell_profiles is defined
 
 - name: "Go-Lang | Ensure shell profiles are configured"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   lineinfile:
     dest: "{{ item[0].stat.path }}"
     regexp: "{{ item[1].regex }}"
@@ -71,8 +67,6 @@
   changed_when: false
 
 - name: "Go-Lang | Restart shell"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   shell: "{{ fubarhouse_user_dir }}/{{ item }}"
   with_items: "{{ shell_profiles }}"
   failed_when: false
