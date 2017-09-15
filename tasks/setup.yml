@@ -90,6 +90,11 @@
    - GOROOT_BOOTSTRAP is not defined
    - build_go_from_source|bool == true
 
+- name: "Go-Lang | Define GOROOT_BOOTSTRAP"
+  set_fact:
+    go_version_string: "go{{ go_version }}"
+  changed_when: false
+
 - name: "Go-Lang | Looking for compiled binary in GOROOT_BOOTSTRAP installation"
   stat:
     path: "{{ GOROOT_BOOTSTRAP }}/bin/go"
@@ -173,5 +178,5 @@
 
 - name: "Go-Lang | Define expected version output"
   set_fact:
-    expected_go_version_output: "go version go{{ go_version }} {{ GOOS }}/{{ GOARCH }}"
+    expected_go_version_output: "go version {{ go_version_string }} {{ GOOS }}/{{ GOARCH }}"
   when: expected_go_version_output is not defined
