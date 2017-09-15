@@ -12,7 +12,7 @@ env:
     distro: ubuntu1204
     init: /sbin/init
     run_opts: --privileged
-    playbook: source.yml
+    playbook: test.yml
   - docker_user: fubarhouse
     distro: ubuntu1210
     init: /sbin/init
