@@ -1,12 +1,10 @@
 ---
 
 - name: "Go-Lang | Download distribution"
-  uri:
-    method: GET
-    status_code: 304
-    return_content: yes
+  get_url:
     url: "{{ go_custom_mirror }}/{{ go_distribution_filename }}.tar.gz"
     dest: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
+    validate_certs: no
 
 - name: "Go-Lang | Empty destination directory"
   file:
