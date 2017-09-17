@@ -58,7 +58,7 @@
   - item[0].stat.exists|bool == true
 
 - name: "Go-Lang | Verify version"
-  shell: "{{ GOPATH }}/go version"
+  shell: "{{ GOROOT }}/bin/go version"
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
