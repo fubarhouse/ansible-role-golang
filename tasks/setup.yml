@@ -169,7 +169,7 @@
     - GOROOT is defined
 
 - name: "Go-Lang | Getting version information"
-  shell: "{{ GOPATH }}/go version | cat"
+  shell: "{{ GOROOT }}/bin/go version | cat"
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
