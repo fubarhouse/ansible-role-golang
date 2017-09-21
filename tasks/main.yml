@@ -23,9 +23,3 @@
 
 - name: "Include tasks for setting Go permissions"
   include: perm.yml
-
-- debug:
-    msg: "{{ expected_go_version_output }}"
-
-- debug:
-    msg: "{{ current_go_version.stdout }}"
