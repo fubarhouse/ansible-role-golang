@@ -2,14 +2,14 @@
 - name: "Go-Lang | Define shell exports"
   set_fact:
     shell_exports:
-    - regex: "export GOROOT"
-      lineinfile: "export GOROOT={{ GOROOT }}"
-    - regex: "export GOPATH"
-      lineinfile: "export GOPATH={{ GOPATH }}"
-    - regex: "PATH:{{ GOPATH }}"
-      lineinfile: "export PATH=$PATH:{{ GOPATH }}"
-    - regex: "PATH:{{ GOPATH }}/bin"
-      lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
+      - regex: "export GOROOT"
+        lineinfile: "export GOROOT={{ GOROOT }}"
+      - regex: "export GOPATH"
+        lineinfile: "export GOPATH={{ GOPATH }}"
+      - regex: "PATH:{{ GOROOT }}/bin"
+        lineinfile: "export PATH=$PATH:{{ GOROOT }}/bin"
+      - regex: "PATH:{{ GOPATH }}/bin"
+        lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
   when: shell_exports is not defined
 
 - name: "Go-Lang | Include bootstrap tasks"
@@ -18,19 +18,19 @@
     - install_go_bootstrap|bool == true
     - go_binary_bootstrap.stat.exists|bool == false
     - GOROOT_BOOTSTRAP is defined
-    - 'go_version_string not in current_go_version'
+    - expected_go_version_output|string not in current_go_version.stdout|default('')
 
 - name: "Go-Lang | Include source build tasks"
   include: install-git.yml
   when:
     - build_go_from_source|bool == true
-    - 'go_version_string not in current_go_version'
+    - expected_go_version_output|string not in current_go_version.stdout|default('')
 
 - name: "Go-Lang | Include distro install tasks"
   include: install-distro.yml
   when:
     - build_go_from_source|bool == false
-    - 'go_version_string not in current_go_version'
+    - expected_go_version_output|string not in current_go_version.stdout|default('')
 
 - name: "Go-Lang | Detect configured shell profiles"
   stat:
@@ -58,12 +58,12 @@
   - item[0].stat.exists|bool == true
 
 - name: "Go-Lang | Verify version"
-  shell: "{{ GOPATH }}/go version"
+  shell: "{{ GOROOT }}/bin/go version"
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
   register: go_version_output
-  failed_when: 'go_version_string not in go_version_output.stdout'
+  failed_when: go_version_string not in go_version_output.stdout
   changed_when: false
 
 - name: "Go-Lang | Restart shell"

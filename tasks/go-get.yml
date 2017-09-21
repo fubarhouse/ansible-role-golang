@@ -19,7 +19,7 @@
     - go_package_locations is defined
 
 - name: "Go-Lang | Run get commands"
-  shell: "{{ GOPATH }}/go get -u {{ item.url }}"
+  shell: "{{ GOROOT }}/bin/go get -u {{ item.url }}"
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"

@@ -12,7 +12,7 @@
   changed_when: false
 
 - name: "Go-Lang | Install packages"
-  shell: "{{ GOPATH }}/go install {{ item.dest }}/..."
+  shell: "{{ GOROOT }}/bin/go install {{ item.dest }}/..."
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"

@@ -1,53 +1,5 @@
 ---
 
-# Define system-specific variables for fubarhouse.golang.
-
-- name: "Go-Lang | Install dependencies (CentOS)"
-  yum:
-    name: "{{ item }}"
-    state: installed
-  with_items:
-    - curl
-    - gcc
-    - git
-    - findutils
-    - make
-    - rsync
-    - tar
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution == "CentOS"
-
-- name: "Go-Lang | Install dependencies (Debian)"
-  apt:
-    name: "{{ item }}"
-    state: installed
-  with_items:
-    - curl
-    - gcc
-    - git
-    - findutils
-    - make
-    - rsync
-    - tar
-  when: ansible_os_family == "Debian"
-
-- name: "Go-Lang | Install dependencies (RedHat)"
-  dnf:
-    name: "{{ item }}"
-    state: installed
-  with_items:
-    - curl
-    - gcc
-    - git
-    - findutils
-    - make
-    - rsync
-    - tar
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution != "CentOS"
-
 - name: "Go-Lang | Define user variable for ssh use"
   set_fact:
     fubarhouse_user: "{{ ansible_ssh_user }}"
@@ -69,28 +21,49 @@
     fubarhouse_user_dir: "{{ shell_home_dir.stdout }}"
   when: fubarhouse_user_dir is not defined
 
+- name: "Go-Lang | Include OS-Specific tasks (CentOS)"
+  include: tasks-CentOS.yml
+  when: ansible_distribution == "CentOS"
+
+- name: "Go-Lang | Include OS-Specific tasks (Darwin)"
+  include: tasks-Darwin.yml
+  when: ansible_os_family == 'Darwin'
+
+- name: "Go-Lang | Include OS-Specific tasks (Debian)"
+  include: tasks-Debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: "Go-Lang | Include OS-Specific tasks (FreeBSD)"
+  include: tasks-Debian.yml
+  when: ansible_distribution == 'FreeBSD'
+
+- name: "Go-Lang | Include OS-Specific tasks (RedHat)"
+  include: tasks-RedHat.yml
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "CentOS"
+
 - name: "Go-Lang | Define GOROOT"
   set_fact:
-    GOROOT: "{{ fubarhouse_user_dir }}/go"
-  when:
-    - GOROOT is not defined
+    GOROOT: /usr/local/go
+  when: GOROOT is not defined
 
 - name: "Go-Lang | Define GOPATH"
   set_fact:
-    GOPATH: "{{ GOROOT }}/bin"
+    GOPATH: "{{ fubarhouse_user_dir }}/go"
   when:
     - GOROOT is defined
     - GOPATH is not defined
 
 - name: "Go-Lang | Define GOROOT_BOOTSTRAP"
   set_fact:
-    GOROOT_BOOTSTRAP: "{{ fubarhouse_user_dir }}/go1.4"
+    GOROOT_BOOTSTRAP: /usr/local/go1.4"
   when:
    - fubarhouse_user_dir is defined
    - GOROOT_BOOTSTRAP is not defined
    - build_go_from_source|bool == true
 
-- name: "Go-Lang | Define GOROOT_BOOTSTRAP"
+- name: "Go-Lang | Define version comparrison string"
   set_fact:
     go_version_string: "go{{ go_version }}"
   changed_when: false
@@ -103,42 +76,6 @@
   when:
    - GOROOT_BOOTSTRAP is defined
    - build_go_from_source|bool == true
-
-- name: "Go-Lang | Define GOARCH for 32-bit systems"
-  set_fact:
-    GOARCH: "386"
-  when:
-    - '"386" in ansible_architecture'
-    - GOARCH is not defined
-
-- name: "Go-Lang | Define GOARCH for 64-bit systems"
-  set_fact:
-    GOARCH: "amd64"
-  when:
-    - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
-    - GOARCH is not defined
-
-- name: "Go-Lang | Define GOOS for Darwin systems"
-  set_fact:
-    GOOS: "darwin"
-  when:
-    - ansible_os_family == 'Darwin'
-    - ansible_distribution == 'MacOSX'
-    - GOOS is not defined
-
-- name: "Go-Lang | Define GOOS for FreeBSD systems"
-  set_fact:
-    GOOS: "freebsd"
-  when:
-    - ansible_distribution == 'FreeBSD'
-    - GOOS is not defined
-
-- name: "Go-Lang | Define GOOS for linux systems"
-  set_fact:
-    GOOS: "linux"
-  when:
-    - ansible_architecture == 'x86_64' or ansible_distribution == 'CentOS' or ansible_distribution == 'Debian' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Ubuntu'
-    - GOOS is not defined
 
 - name: "Go-Lang | Define URL for distribution"
   set_fact:
@@ -156,20 +93,8 @@
   register: go_binary
   failed_when: false
 
-- name: "Go-Lang | Define GOROOT"
-  set_fact:
-    GOROOT: "{{ GOROOT }}"
-  when: GOROOT is defined
-
-- name: "Go-Lang | Define GOPATH"
-  set_fact:
-    GOPATH: "{{ GOROOT }}/bin"
-  when:
-    - GOPATH is not defined
-    - GOROOT is defined
-
 - name: "Go-Lang | Getting version information"
-  shell: "{{ GOPATH }}/go version | cat"
+  shell: "{{ GOROOT }}/bin/go version | cat"
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
