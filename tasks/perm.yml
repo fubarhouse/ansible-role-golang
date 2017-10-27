@@ -5,7 +5,7 @@
     path: "{{ GOROOT }}"
     state: directory
     mode: "{{ mode_codebase }}"
-    recurse: yes
+    recurse: no
   changed_when: false
 
 - name: "Go-Lang | Set workspace permissions"
@@ -13,7 +13,7 @@
     path: "{{ GOPATH }}/{{ item }}"
     state: directory
     mode: "{{ mode_workspace }}"
-    recurse: yes
+    recurse: no
   with_items:
   - src
   - pkg
