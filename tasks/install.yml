@@ -7,9 +7,11 @@
       - regex: "export GOPATH"
         lineinfile: "export GOPATH={{ GOPATH }}"
       - regex: "PATH:{{ GOROOT }}/bin"
-        lineinfile: "export PATH=$PATH:{{ GOROOT }}/bin"
+        lineinfile: "export $PATH:{{ GOROOT }}/bin"
+      - regex: "PATH:{{ GOPATH }}"
+        lineinfile: "export $PATH=$PATH:{{ GOPATH }}"
       - regex: "PATH:{{ GOPATH }}/bin"
-        lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
+        lineinfile: "export $PATH=$PATH:{{ GOPATH }}/bin"
   when: shell_exports is not defined
 
 - name: "Go-Lang | Include bootstrap tasks"
