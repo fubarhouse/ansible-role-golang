@@ -6,6 +6,12 @@
     state: absent
   failed_when: false
 
+- name: "Go-Lang | Removing GOPATH"
+  file:
+    path: "{{ GOPATH }}"
+    state: absent
+  failed_when: false
+
 - name: "Go-Lang | Removing GOBOOTSTRAP"
   file:
     path: "{{ GOROOT_BOOTSTRAP }}"
