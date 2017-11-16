@@ -11,7 +11,8 @@
 - name: "Include tasks for installation"
   include: install.yml
   when: (current_go_version is not defined) or
-        (expected_go_version_output|string not in current_go_version.stdout|default(''))
+        (expected_go_version_output|string not in current_go_version.stdout|default('')) or
+        (go_install_clean|bool == true)
 
 - name: "Include tasks for Go Get"
   include: go-get.yml
