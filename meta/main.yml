@@ -15,7 +15,7 @@ galaxy_info:
     - xenial
     - vivid
     - wily
-#    - utopic
+    - utopic
     - trusty
     - saucy
     - raring

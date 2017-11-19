@@ -6,6 +6,12 @@
     state: absent
   failed_when: false
 
+- name: "Go-Lang | Removing GOPATH"
+  file:
+    path: "{{ GOPATH }}"
+    state: absent
+  failed_when: false
+
 - name: "Go-Lang | Removing GOBOOTSTRAP"
   file:
     path: "{{ GOROOT_BOOTSTRAP }}"
@@ -22,10 +28,12 @@
         lineinfile: "export GOROOT={{ GOROOT }}"
       - regex: "export GOPATH"
         lineinfile: "export GOPATH={{ GOPATH }}"
+      - regex: "PATH:{{ GOROOT }}/bin"
+        lineinfile: "export $PATH:{{ GOROOT }}/bin"
       - regex: "PATH:{{ GOPATH }}"
-        lineinfile: "export PATH=$PATH:{{ GOPATH }}"
+        lineinfile: "export $PATH=$PATH:{{ GOPATH }}"
       - regex: "PATH:{{ GOPATH }}/bin"
-        lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
+        lineinfile: "export $PATH=$PATH:{{ GOPATH }}/bin"
   when: shell_exports is not defined
 
 - name: "Go-Lang | Detect configured shell profiles"
