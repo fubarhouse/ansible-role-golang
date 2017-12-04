@@ -3,7 +3,7 @@
 # Ansible Role: Go
 
 [![Build Status](https://travis-ci.org/fubarhouse/ansible-role-golang.svg?branch=master)](https://travis-ci.org/fubarhouse/ansible-role-golang)
-[![Ansible Galaxy](https://img.shields.io/badge/galaxy-fubarhouse--golang-5140.svg)](https://galaxy.ansible.com/fubarhouse/golang)
+[![Ansible Galaxy](https://img.shields.io/ansible/role/14309.svg)](https://galaxy.ansible.com/fubarhouse/golang)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/fubarhouse/ansible-role-golang/master/LICENSE)
 
 * Installs the Google [Go](https://golang.org/) programming language
