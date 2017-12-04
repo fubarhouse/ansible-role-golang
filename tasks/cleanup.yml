@@ -21,19 +21,6 @@
    - install_go_bootstrap|bool == true
   failed_when: false
 
-- name: "Go-Lang | Define shell exports"
-  set_fact:
-    shell_exports:
-      - regex: "export GOROOT"
-        lineinfile: "export GOROOT={{ GOROOT }}"
-      - regex: "export GOPATH"
-        lineinfile: "export GOPATH={{ GOPATH }}"
-      - regex: "PATH:{{ GOROOT }}/bin"
-        lineinfile: "export PATH=$PATH:{{ GOROOT }}/bin"
-      - regex: "PATH:{{ GOPATH }}/bin"
-        lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
-  when: shell_exports is not defined
-
 - name: "Go-Lang | Detect configured shell profiles"
   stat:
     path: "{{ fubarhouse_user_dir }}/{{ item }}"
