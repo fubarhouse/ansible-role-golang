@@ -54,7 +54,9 @@
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
   register: go_version_output
-  failed_when: go_version_string not in go_version_output.stdout
+  failed_when: >
+    (go_version_string not in go_version_output.stdout) and
+    ("go version devel" not in go_version_output.stdout)
   changed_when: false
 
 - name: "Go-Lang | Restart shell"
