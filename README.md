@@ -10,7 +10,8 @@
 * Install configurations are entirely automatic
 * Install configurations can be manually set
 * Installs from configurable mirror
-* Installs optional packages using `go get`
+* Optionally cleans your `$GOPATH` whenever you need to.
+* Installs optional packages using `go get` and/or `go install`.
 
 ## Requirements
 
