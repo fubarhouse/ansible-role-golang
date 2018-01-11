@@ -63,6 +63,21 @@ go_get:
   url: github.com/golang/lint/golint
 ````
 
+You can also manually clone and get specific versions of packages, which does not include the download of any dependencies.
+
+This was due to the need to install specific versions of software written in Go, and the language provides no alternative at this time.
+
+It's highly recommend you run this playbook as many times as you need until you can get a success and to use `go_reget` in conjunction with this feature, or to not use this feature unless absolutely necessary. 
+````yaml
+go_install:
+  # repo is the git clone url, ssh or https.
+- repo: https://github.com/fubarhouse/dvm.git
+  # dest is the namespace
+  dest: github.com/fubarhouse/dvm
+  # version refers to a tag, or branch.
+  version: 2.2.5
+````
+
 To ensure all packages are removed before running the play, you can use the go_reget variable:
 ````
 go_reget: true
