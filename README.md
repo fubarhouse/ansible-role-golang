@@ -19,18 +19,18 @@
 ## Role Variables
 
 Installation configuration
-````
+````yaml
 go_custom_mirror: https://storage.googleapis.com/golang
 ````
 
 Basic configuration
-````
+````yaml
 go_version: 1.8.1
 GOROOT: /home/vagrant/go
 ````
 
 Optional configuration
-````
+````yaml
 GOOS: darwin
 GOARCH: amd64
 ````
@@ -38,24 +38,24 @@ GOARCH: amd64
 ****Building from source****
 
 Golang Bootstrap Workspace
-````
+````yaml
 GOROOT_BOOTSTRAP: /home/vagrant/go1.4
 ````
 Boolean to indicate build should be from source.
-````
+````yaml
 build_go_from_source: false
 ````
 Boolean to indicate Bootstrap needs installation.
-````
+````yaml
 install_go_bootstrap: false
 ````
 Which script should be used when building from source
-````
+````yaml
 go_build_script: make.bash
 ````
 
 To install `go get` binaries/projects, add them to `go_get`
-````
+````yaml
 go_get:
 - name: gopm
   url: github.com/gpmgo/gopm
@@ -79,28 +79,28 @@ go_install:
 ````
 
 To ensure all packages are removed before running the play, you can use the go_reget variable:
-````
+````yaml
 go_reget: true
 ````
 
 To add/change the shell profiles to configure, use the `shell_profiles` array.
-````
+````yaml
 shell_profiles:
 - .bash_profile
 ````
 
 To clean up an installation completely prior to role execution:
-````
+````yaml
 go_install_clean: true
 ````
 ### Setting permissions
 **Note**: If you specify insufficient permissions the playbook will treat the following play as a new installation because it will not be able to determine what version is installed. 
 To specify the permissions of the codebase, you can set:
-````
+````yaml
 mode_codebase: 0755
 ````
 To specify the permissions of the workspace, you can set:
-````
+````yaml
 mode_workspace: 0755
 ````
 
