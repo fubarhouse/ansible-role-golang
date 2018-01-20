@@ -4,6 +4,7 @@
   get_url:
     url: "{{ go_custom_mirror }}/{{ go_distribution_filename }}.tar.gz"
     dest: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
+    checksum: "{{ go_checksum | default('') }}"
     validate_certs: no
 
 - name: "Go-Lang | Empty destination directory"

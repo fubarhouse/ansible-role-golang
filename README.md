@@ -26,7 +26,7 @@ go_custom_mirror: https://storage.googleapis.com/golang
 
 Basic configuration
 ````yaml
-go_version: 1.8.1
+go_version: 1.10beta2
 GOROOT: /home/vagrant/go
 ````
 
@@ -34,6 +34,7 @@ Optional configuration
 ````yaml
 GOOS: darwin
 GOARCH: amd64
+go_checksum: sha256:82628a1a42d7ad88b100d0c4c9c0282a7e008e4eb73876bed4bd61ac4ee11b46
 ````
 
 ****Building from source****
