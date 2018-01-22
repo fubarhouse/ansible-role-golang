@@ -27,7 +27,8 @@ go_custom_mirror: https://storage.googleapis.com/golang
 Basic configuration
 ````yaml
 go_version: 1.10beta2
-GOROOT: /home/vagrant/go
+GOPATH: /home/vagrant/go
+GOROOT: /usr/local/go
 ````
 
 Optional configuration
