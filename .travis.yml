@@ -99,6 +99,11 @@ env:
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
   - docker_user: fubarhouse
+    distro: debian10
+    init: /bin/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - docker_user: fubarhouse
     distro: fedora24
     init: /usr/lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
