@@ -8,118 +8,95 @@ services: docker
 env:
 
   # Source installation tests.
-  - docker_user: geerlingguy
-    distro: ubuntu1204
+  - distro: precise
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1210
+  - distro: quantal
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1304
+  - distro: raring
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1310
+  - distro: saucy
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: geerlingguy
-    distro: ubuntu1404
+  - distro: trusty
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1410
+  - distro: utopic
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1504
+  - distro: vivid
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1510
+  - distro: wily
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: geerlingguy
-    distro: ubuntu1604
+  - distro: xenial
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1610
+  - distro: yakkety
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1704
+  - distro: zesty
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1710
+  - distro: artful
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: ubuntu1804
+  - distro: bionic
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-  - docker_user: geerlingguy
-    distro: centos6
+  - distro: centos-6
     init: /sbin/init
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  - docker_user: geerlingguy
-    distro: centos7
+  - distro: centos-7
     init: /usr/lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: debian7
+  - distro: wheezy
     init: /bin/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  - docker_user: geerlingguy
-    distro: debian8
+  - distro: jessie
     init: /lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: debian9
+  - distro: stretch
     init: /bin/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: debian10
+  - distro: buster
     init: /bin/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: fedora24
+  - distro: fedora-24
     init: /usr/lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: fedora25
+  - distro: fedora-25
     init: /usr/lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: fedora26
+  - distro: fedora-26
     init: /usr/lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
-  - docker_user: fubarhouse
-    distro: fedora27
+  - distro: fedora-27
     init: /usr/lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
@@ -127,7 +104,7 @@ env:
 before_install:
 
   # Pull container.
-  - 'docker pull ${docker_user}/docker-${distro}-ansible:latest'
+  - 'docker pull fubarhouse/docker-ansible:${distro}'
 
 script:
 
