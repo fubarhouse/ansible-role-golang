@@ -21,17 +21,6 @@
    - install_go_bootstrap|bool == true
   failed_when: false
 
-- name: "Go-Lang | Detect configured shell profiles"
-  stat:
-    path: "{{ fubarhouse_user_dir }}/{{ item }}"
-  changed_when: false
-  failed_when: false
-  with_items: "{{ shell_profiles }}"
-  register: stat_shell_profiles
-  when:
-  - shell_profiles is defined
-  - stat_shell_profiles is not defined
-
 - name: "Go-Lang | Ensure shell profiles are clean"
   lineinfile:
     dest: "{{ item[0].stat.path }}"

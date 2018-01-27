@@ -23,17 +23,6 @@
     ((expected_go_version_output|string not in current_go_version.stdout|default('')) or
     (go_install_clean|bool == true))
 
-- name: "Go-Lang | Detect configured shell profiles"
-  stat:
-    path: "{{ fubarhouse_user_dir }}/{{ item }}"
-  changed_when: false
-  failed_when: false
-  with_items: "{{ shell_profiles }}"
-  register: stat_shell_profiles
-  when:
-  - stat_shell_profiles is defined
-  - shell_profiles is defined
-
 - name: "Go-Lang | Ensure shell profiles are configured"
   lineinfile:
     dest: "{{ item[0].stat.path }}"
