@@ -3,33 +3,38 @@ galaxy_info:
   description: Installs the Go programming language from distribution, or build from source, and install desired packages to your Golang workspace!
   license: MIT
   min_ansible_version: 2.0
-  platforms:
-  - name: MacOSX
-    versions:
-    - all
-  - name: Ubuntu
-    versions:
-    - artful
-    - zesty
-    - yakkety
-    - xenial
-    - vivid
-    - wily
-    - utopic
-    - trusty
-    - saucy
-    - raring
-    - quantal
-    - precise
-  - name: EL
-    versions:
-    - 6
-    - 7
-  - name: Debian
-    versions:
-    - wheezy
-    - jessie
-    - stretch
+    platforms:
+    - name: Debian
+      versions:
+        - wheezy
+        - jessie
+        - stretch
+        - buster
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Fedora
+      versions:
+        - 24
+        - 25
+        - 26
+        - 27
+    - name: Ubuntu
+      versions:
+        - precise
+        - quantal
+        - raring
+        - saucy
+        - trusty
+        - utopic
+        - wily
+        - vivid
+        - xenial
+        - yakkety
+        - zesty
+        - artful
+        - bionic
   galaxy_tags:
   - go
   - development
