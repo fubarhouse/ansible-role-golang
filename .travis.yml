@@ -44,10 +44,10 @@ env:
     init: /sbin/init
     run_opts: --privileged
     playbook: test.yml
-#  - distro: yakkety
-#    init: /sbin/init
-#    run_opts: --privileged
-#    playbook: test.yml
+  - distro: yakkety
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
   - distro: zesty
     init: /sbin/init
     run_opts: --privileged
@@ -97,6 +97,10 @@ env:
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
   - distro: fedora-27
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: fedora-28
     init: /usr/lib/systemd/systemd
     run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
     playbook: test.yml
