@@ -1,7 +1,7 @@
 ---
 
 - name: "Go-Lang | Include bootstrap tasks"
-  include: install-bootstrap.yml
+  include_tasks: install-bootstrap.yml
   when:
     (install_go_bootstrap|bool == true) and
     ((go_binary_bootstrap.stat.exists|bool == false) or
@@ -10,14 +10,14 @@
     (GOROOT_BOOTSTRAP is defined)
 
 - name: "Go-Lang | Include source build tasks"
-  include: install-git.yml
+  include_tasks: install-git.yml
   when:
     (build_go_from_source|bool == true) and
     ((expected_go_version_output|string not in current_go_version.stdout|default('')) or
     (go_install_clean|bool == true))
 
 - name: "Go-Lang | Include distro install tasks"
-  include: install-distro.yml
+  include_tasks: install-distro.yml
   when:
     (build_go_from_source|bool == false) and
     ((expected_go_version_output|string not in current_go_version.stdout|default('')) or
