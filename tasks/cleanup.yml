@@ -23,14 +23,13 @@
 
 - name: "Go-Lang | Ensure shell profiles are clean"
   lineinfile:
-    dest: "{{ item[0].stat.path }}"
+    dest: "{{ item[0] }}"
     regexp: "{{ item[1].regex }}"
     line: "{{ item[1].lineinfile }}"
     state: absent
   with_nested:
-  - "{{ stat_shell_profiles.results }}"
+  - "{{ golang_shell_profile }}"
   - "{{ shell_exports }}"
   when:
-  - shell_profiles is defined
+  - golang_shell_profile is defined
   - shell_exports is defined
-  - item[0].stat.exists|bool == true

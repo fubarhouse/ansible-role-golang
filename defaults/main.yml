@@ -22,7 +22,3 @@ go_get:
 - name: golint
   url: github.com/golang/lint/golint
 go_install: []
-
-# Configuration
-shell_profiles:
-- .bash_profile

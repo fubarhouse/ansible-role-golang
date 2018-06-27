@@ -25,17 +25,15 @@
 
 - name: "Go-Lang | Ensure shell profiles are configured"
   lineinfile:
-    dest: "{{ item[0].stat.path }}"
+    dest: "{{ item[0] }}"
     regexp: "{{ item[1].regex }}"
     line: "{{ item[1].lineinfile }}"
     state: present
   with_nested:
-  - "{{ stat_shell_profiles.results }}"
+  - "{{ golang_shell_profile }}"
   - "{{ shell_exports }}"
   when:
-  - stat_shell_profiles is defined
-  - shell_profiles is defined
-  - item[0].stat.exists|bool == true
+  - golang_shell_profile is defined
 
 - name: "Go-Lang | Verify version"
   shell: "{{ GOROOT }}/bin/go version"
@@ -49,6 +47,5 @@
   changed_when: false
 
 - name: "Go-Lang | Restart shell"
-  shell: "{{ fubarhouse_user_dir }}/{{ item }}"
-  with_items: "{{ shell_profiles }}"
+  shell: "{{ golang_shell_profile }}"
   failed_when: false
