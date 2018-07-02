@@ -28,3 +28,7 @@
 - name: "Include tasks for setting Go permissions"
   include_tasks: perm.yml
   when: go_uninstall|bool == false
+
+- name: "Include tasks for shell installation"
+  include_tasks: install-shell.yml
+  when: golang_shell_profile is defined

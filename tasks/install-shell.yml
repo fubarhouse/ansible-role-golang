@@ -1,0 +1,16 @@
+---
+
+- name: "Go-Lang | Ensure shell profiles are configured"
+  lineinfile:
+    dest: "{{ item[0] }}"
+    regexp: "{{ item[1].regex }}"
+    line: "{{ item[1].lineinfile }}"
+    state: present
+  with_nested:
+  - "{{ golang_shell_profile }}"
+  - "{{ shell_exports }}"
+
+- name: "Go-Lang | Restart shell"
+  shell: "{{ golang_shell_profile }}"
+  changed_when: false
+  failed_when: false
