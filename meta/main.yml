@@ -36,6 +36,7 @@ galaxy_info:
         - zesty
         - artful
         - bionic
+        - cuttlefish
   galaxy_tags:
     - go
     - development
