@@ -17,10 +17,10 @@ go_build_script: make.bash
 
 # Go get
 go_get:
-- name: gopm
-  url: github.com/gpmgo/gopm
-- name: golint
-  url: github.com/golang/lint/golint
+- name: dep
+  url: github.com/golang/dep/cmd/dep
+- name: vgo
+  url: golang.org/x/vgo
 go_install: []
 
 # Configuration
