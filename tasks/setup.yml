@@ -55,17 +55,6 @@
     - GOROOT is defined
     - GOPATH is not defined
 
-- name: "Go-Lang | Detect configured shell profiles"
-  stat:
-    path: "{{ fubarhouse_user_dir }}/{{ item }}"
-  changed_when: false
-  failed_when: false
-  with_items: "{{ shell_profiles }}"
-  register: stat_shell_profiles
-  when:
-    - shell_profiles is defined
-    - stat_shell_profiles is not defined
-
 - name: "Go-Lang | Define shell exports"
   set_fact:
     shell_exports:
@@ -78,7 +67,7 @@
       - regex: "PATH:{{ GOPATH }}/bin"
         lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
   when:
-    - stat_shell_profiles is defined
+    - golang_shell_profile is defined
     - shell_exports is not defined
 
 - name: "Go-Lang | Define GOROOT_BOOTSTRAP"

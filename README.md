@@ -87,10 +87,12 @@ To ensure all packages are removed before running the play, you can use the go_r
 go_reget: true
 ````
 
-To add/change the shell profiles to configure, use the `shell_profiles` array.
+To add/change the absolute path of shell profiles to configure, use `golang_shell_profile`.
+
+**If you do not define `golang_shell_profile`, the functionality will be ignored.**
+
 ````yaml
-shell_profiles:
-- .bash_profile
+golang_shell_profile: /root/.bash_profile
 ````
 
 To clean up an installation completely prior to role execution:

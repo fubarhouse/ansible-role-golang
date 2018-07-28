@@ -22,7 +22,3 @@ go_get:
 - name: vgo
   url: golang.org/x/vgo
 go_install: []
-
-# Configuration
-shell_profiles:
-- .bash_profile
