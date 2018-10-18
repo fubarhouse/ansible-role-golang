@@ -12,7 +12,7 @@ galaxy_info:
         - buster
     - name: EL
       versions:
-        - 6
+#        - 6
         - 7
     - name: Fedora
       versions:
