@@ -2,14 +2,7 @@
 
 - name: "Go-Lang | Install dependencies"
   apt:
-    pkg:
-      - curl
-      - gcc
-      - git
-      - findutils
-      - make
-      - rsync
-      - tar
+    pkg: [ 'curl', 'gcc', 'git', 'findutils', 'make', 'rsync', 'tar' ]
     state: present
 
 - name: "Go-Lang | Define GOARCH"
