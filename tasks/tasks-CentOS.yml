@@ -2,14 +2,7 @@
 
 - name: "Go-Lang | Install dependencies"
   yum:
-    name:
-      - curl
-      - gcc
-      - git
-      - findutils
-      - make
-      - rsync
-      - tar
+    name: ['curl', 'gcc', 'git', 'findutils', 'make', 'rsync', 'tar']
     state: present
 
 - name: "Go-Lang | Define GOARCH"
