@@ -23,6 +23,7 @@
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
+    GOPROXY: "{{ GOPROXY }}"
     GO111MODULE: ""
   with_items: "{{ go_get }}"
   changed_when: false

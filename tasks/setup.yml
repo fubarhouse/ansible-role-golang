@@ -55,6 +55,12 @@
     - GOROOT is defined
     - GOPATH is not defined
 
+- name: "Go-Lang | Define GOPROXY"
+  set_fact:
+    GOPROXY: ""
+  when:
+    - GOPROXY is defined
+
 - name: "Go-Lang | Define shell exports"
   set_fact:
     shell_exports:
@@ -62,6 +68,8 @@
         lineinfile: "export GOROOT={{ GOROOT }}"
       - regex: "export GOPATH"
         lineinfile: "export GOPATH={{ GOPATH }}"
+      - regex: "export GOPROXY={{ GOPROXY }}"
+        lineinfile: "export GOPROXY={{ GOPROXY }}"
       - regex: "PATH:{{ GOROOT }}/bin"
         lineinfile: "export PATH=$PATH:{{ GOROOT }}/bin"
       - regex: "PATH:{{ GOPATH }}/bin"
