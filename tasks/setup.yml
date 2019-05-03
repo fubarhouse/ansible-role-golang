@@ -59,7 +59,7 @@
   set_fact:
     GOPROXY: ""
   when:
-    - GOPROXY is defined
+    - GOPROXY is not defined
 
 - name: "Go-Lang | Define shell exports"
   set_fact:
