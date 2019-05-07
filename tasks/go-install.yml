@@ -16,6 +16,7 @@
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
+    GOPROXY: "{{ GOPROXY }}"
     GO111MODULE: "on"
   args:
     chdir: "{{ GOPATH }}/src/{{ item.dest }}"
@@ -27,5 +28,6 @@
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
+    GOPROXY: "{{ GOPROXY }}"
   with_items: "{{ go_install }}"
   changed_when: false
