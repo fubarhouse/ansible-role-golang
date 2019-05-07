@@ -11,6 +11,17 @@
   with_items: "{{ go_install }}"
   changed_when: false
 
+- name: "Go-Lang | Install vendors"
+  shell: "{{ GOROOT }}/bin/go mod vendor"
+  environment:
+    GOROOT: "{{ GOROOT }}"
+    GOPATH: "{{ GOPATH }}"
+    GO111MODULE: "on"
+  args:
+    chdir: "{{ GOPATH }}/src/{{ item.dest }}"
+  with_items: "{{ go_install }}"
+  changed_when: false
+
 - name: "Go-Lang | Install packages"
   shell: "{{ GOROOT }}/bin/go install {{ item.dest }}/..."
   environment:

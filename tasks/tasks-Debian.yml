@@ -2,16 +2,8 @@
 
 - name: "Go-Lang | Install dependencies"
   apt:
-    name: "{{ item }}"
+    pkg: [ 'curl', 'gcc', 'git', 'findutils', 'make', 'rsync', 'tar' ]
     state: present
-  with_items:
-    - curl
-    - gcc
-    - git
-    - findutils
-    - make
-    - rsync
-    - tar
 
 - name: "Go-Lang | Define GOARCH"
   set_fact:
