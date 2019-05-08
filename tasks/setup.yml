@@ -43,6 +43,11 @@
     - ansible_os_family == "RedHat"
     - ansible_distribution != "CentOS"
 
+- name: "Go-Lang | Define GO111MODULE"
+  set_fact:
+    GO111MODULE: on
+  when: GO111MODULE is not defined
+
 - name: "Go-Lang | Define GOROOT"
   set_fact:
     GOROOT: /usr/local/go
