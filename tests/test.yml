@@ -11,6 +11,7 @@
     GOROOT: /home/travis/goroot1.9
     GOPATH: /home/travis/gopath
     GOROOT_BOOTSTRAP: /home/travis/goroot1.4
+    GO111MODULE: "off"
 
   pre_tasks:
     - file:
