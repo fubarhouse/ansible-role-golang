@@ -135,4 +135,5 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
 notifications:
+  slack: fubarhouse:upHoIzmKb4ikkBOt2cOwgKXY
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
