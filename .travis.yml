@@ -48,4 +48,5 @@ script:
   - sleep 10
 
 notifications:
+  slack: fubarhouse:upHoIzmKb4ikkBOt2cOwgKXY
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
