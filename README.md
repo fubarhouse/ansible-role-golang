@@ -30,6 +30,7 @@ Basic configuration
 go_version: 1.10beta2
 GOPATH: /home/vagrant/go
 GOROOT: /usr/local/go
+GOPROXY: https://proxy.golang.org
 ````
 
 Optional configuration
