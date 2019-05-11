@@ -35,6 +35,7 @@ GOPROXY: https://proxy.golang.org
 
 Optional configuration
 ````yaml
+GO111MODULE: "on" # Needs to be of type string, not on/off which will be handled as a boolean.
 GOOS: darwin
 GOARCH: amd64
 go_checksum: sha256:82628a1a42d7ad88b100d0c4c9c0282a7e008e4eb73876bed4bd61ac4ee11b46

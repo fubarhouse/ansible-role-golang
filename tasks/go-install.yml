@@ -17,7 +17,7 @@
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
     GOPROXY: "{{ GOPROXY }}"
-    GO111MODULE: "on"
+    GO111MODULE: "{{ GO111MODULE }}"
   args:
     chdir: "{{ GOPATH }}/src/{{ item.dest }}"
   with_items: "{{ go_install }}"
@@ -29,5 +29,6 @@
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
     GOPROXY: "{{ GOPROXY }}"
+    GO111MODULE: "{{ GO111MODULE }}"
   with_items: "{{ go_install }}"
   changed_when: false
