@@ -19,4 +19,6 @@ go_build_script: make.bash
 go_get:
 - name: dep
   url: github.com/golang/dep/cmd/dep
+- name: vgo
+  url: golang.org/x/vgo
 go_install: []
