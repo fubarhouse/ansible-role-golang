@@ -108,7 +108,7 @@
 - name: "Go-Lang | Define URL for distribution"
   set_fact:
     go_distribution_filename: "go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}"
-  when: build_go_from_source|bool == false
+  when: not build_go_from_source
 
 - name: "Go-Lang | Define URL for source"
   set_fact:

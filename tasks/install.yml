@@ -4,7 +4,7 @@
   include_tasks: install-bootstrap.yml
   when:
     (install_go_bootstrap) and
-    ((go_binary_bootstrap.stat.exists|bool == false) or
+    ((not go_binary_bootstrap.stat.exists) or
     (expected_go_version_output|string not in current_go_version.stdout|default('')) or
     (go_install_clean)) and
     (GOROOT_BOOTSTRAP is defined)
@@ -19,7 +19,7 @@
 - name: "Go-Lang | Include distro install tasks"
   include_tasks: install-distro.yml
   when:
-    (build_go_from_source|bool == false) and
+    (not build_go_from_source) and
     ((expected_go_version_output|string not in current_go_version.stdout|default('')) or
     (go_install_clean))
 
