@@ -26,6 +26,10 @@
       changed_when: false
       when: ansible_os_family == 'RedHat'
       failed_when: false
+      register: yum_result
+      until: yum_result is success
+      retries: 1
+      delay: 2
 
     - name: Update apt cache.
       apt:
@@ -34,6 +38,10 @@
       changed_when: false
       when: ansible_os_family == 'Debian'
       failed_when: false
+      register: apt_result
+      until: apt_result is success
+      retries: 1
+      delay: 2
 
   roles:
     - role_under_test
