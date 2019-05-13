@@ -1,7 +1,6 @@
 ---
 
 - hosts: all
-  sudo: true
 
   vars:
     go_version: 1.12
