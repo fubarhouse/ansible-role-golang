@@ -22,7 +22,7 @@
     - name: Update yum cache.
       yum:
         update_cache: yes
-        state: latest
+        state: present
       changed_when: false
       when: ansible_os_family == 'RedHat'
       failed_when: false
