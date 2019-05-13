@@ -3,25 +3,25 @@
 - name: "Go-Lang | Include bootstrap tasks"
   include_tasks: install-bootstrap.yml
   when:
-    (install_go_bootstrap|bool == true) and
+    (install_go_bootstrap) and
     ((go_binary_bootstrap.stat.exists|bool == false) or
     (expected_go_version_output|string not in current_go_version.stdout|default('')) or
-    (go_install_clean|bool == true)) and
+    (go_install_clean)) and
     (GOROOT_BOOTSTRAP is defined)
 
 - name: "Go-Lang | Include source build tasks"
   include_tasks: install-git.yml
   when:
-    (build_go_from_source|bool == true) and
+    (build_go_from_source) and
     ((expected_go_version_output|string not in current_go_version.stdout|default('')) or
-    (go_install_clean|bool == true))
+    (go_install_clean))
 
 - name: "Go-Lang | Include distro install tasks"
   include_tasks: install-distro.yml
   when:
     (build_go_from_source|bool == false) and
     ((expected_go_version_output|string not in current_go_version.stdout|default('')) or
-    (go_install_clean|bool == true))
+    (go_install_clean))
 
 - name: "Go-Lang | Verify version"
   shell: "{{ GOROOT }}/bin/go version"
