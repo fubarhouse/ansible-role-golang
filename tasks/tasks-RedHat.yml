@@ -4,7 +4,7 @@
   dnf:
     name: [ 'curl', 'gcc', 'git', 'findutils', 'make', 'rsync', 'tar' ]
     state: present
-  
+
 - name: "Go-Lang | Define GOARCH"
   set_fact:
     GOARCH: "amd64"
