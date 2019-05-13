@@ -4,6 +4,10 @@
   dnf:
     name: [ 'curl', 'gcc', 'git', 'findutils', 'make', 'rsync', 'tar' ]
     state: present
+  register: redhat_result
+  until: redhat_result is success
+  retries: 1
+  delay: 2
 
 - name: "Go-Lang | Define GOARCH"
   set_fact:
