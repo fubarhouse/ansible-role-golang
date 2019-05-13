@@ -32,6 +32,7 @@ env:
   - distro: fedora26
   - distro: fedora27
   - distro: fedora28
+  - distro: fedora31
 
 before_install:
   # Install golang deps
