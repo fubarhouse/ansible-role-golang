@@ -24,7 +24,7 @@
     (go_install_clean))
 
 - name: "Go-Lang | Verify version"
-  shell: "{{ GOROOT }}/bin/go version"
+  command: "{{ GOROOT }}/bin/go version"
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"

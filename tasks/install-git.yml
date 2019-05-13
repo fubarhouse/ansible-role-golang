@@ -22,7 +22,7 @@
     force: yes
 
 - name: "Go-Lang | Build from source"
-  shell: "cd {{ GOROOT }}/src && ./{{ go_build_script }}"
+  command: "cd {{ GOROOT }}/src && ./{{ go_build_script }}"
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"

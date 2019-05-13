@@ -27,10 +27,10 @@
     copy: "no"
 
 - name: "Go-Lang | Removing existing installation"
-  shell: "rm -rf {{ GOROOT }}/*"
+  command: "rm -rf {{ GOROOT }}/*"
 
 - name: "Go-Lang | Moving to installation directory"
-  shell: "cp -rf {{ go_temporary_dir }}/go/* {{ GOROOT }}/"
+  command: "cp -rf {{ go_temporary_dir }}/go/* {{ GOROOT }}/"
 
 - name: "Go-Lang | Remove temporary data"
   file:

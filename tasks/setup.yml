@@ -11,7 +11,7 @@
   when: ansible_ssh_user is not defined and fubarhouse_user is not defined
 
 - name: "Go-Lang | Get $HOME"
-  shell: "echo $HOME"
+  command: "echo $HOME"
   register: shell_home_dir
   changed_when: false
   when: fubarhouse_user_dir is not defined
@@ -122,7 +122,7 @@
   failed_when: false
 
 - name: "Go-Lang | Getting version information"
-  shell: "{{ GOROOT }}/bin/go version | cat"
+  command: "{{ GOROOT }}/bin/go version | cat"
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
