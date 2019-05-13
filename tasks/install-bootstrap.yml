@@ -19,3 +19,4 @@
   command: "cd {{ GOROOT_BOOTSTRAP }}/src && ./{{ go_build_script }}"
   environment:
     GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"
+  when: install_go_bootstrap

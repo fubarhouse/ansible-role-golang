@@ -27,3 +27,4 @@
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
     GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"
+  when: build_go_from_source
