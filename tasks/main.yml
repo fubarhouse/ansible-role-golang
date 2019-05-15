@@ -10,8 +10,9 @@
 
 - name: "Include tasks for installation"
   include_tasks: install.yml
-  when: ((current_go_version is not defined) or
+  when: (not go_binary.stat.exists) or ((current_go_version is not defined) or
         (expected_go_version_output|string not in current_go_version.stdout|default('')) or
+        go_install_clean) and
         (go_install_clean) and
         (not go_uninstall)
 

@@ -128,6 +128,7 @@
     GOROOT: "{{ GOROOT }}"
   register: current_go_version
   changed_when: false
+  failed_when: false
 
 - name: "Go-Lang | Define expected version output"
   set_fact:
