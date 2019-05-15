@@ -39,6 +39,7 @@ galaxy_info:
         - artful
         - bionic
         - cuttlefish
+        - disco
   galaxy_tags:
     - go
     - development
