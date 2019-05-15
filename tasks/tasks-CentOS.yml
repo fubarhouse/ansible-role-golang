@@ -4,6 +4,10 @@
   yum:
     name: ['curl', 'gcc', 'git', 'findutils', 'make', 'rsync', 'tar']
     state: present
+  register: centos_result
+  until: centos_result is success
+  retries: 1
+  delay: 2
 
 - name: "Go-Lang | Define GOARCH"
   set_fact:
