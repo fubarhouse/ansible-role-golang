@@ -12,7 +12,7 @@
   changed_when: false
 
 - name: "Go-Lang | Install vendors"
-  shell: "{{ GOROOT }}/bin/go mod vendor"
+  command: "{{ GOROOT }}/bin/go mod vendor"
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
@@ -24,7 +24,7 @@
   changed_when: false
 
 - name: "Go-Lang | Install packages"
-  shell: "{{ GOROOT }}/bin/go install {{ item.dest }}/..."
+  command: "{{ GOROOT }}/bin/go install {{ item.dest }}/..."
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
