@@ -24,6 +24,7 @@ galaxy_info:
         - 27
         - 28
         - 29
+        - 31
     - name: Ubuntu
       versions:
         - precise
