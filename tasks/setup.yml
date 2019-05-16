@@ -11,7 +11,7 @@
   when: ansible_ssh_user is not defined and fubarhouse_user is not defined
 
 - name: "Go-Lang | Get $HOME"
-  shell: "echo $HOME"
+  command: "echo $HOME"
   register: shell_home_dir
   changed_when: false
   when: fubarhouse_user_dir is not defined
@@ -89,7 +89,7 @@
   when:
    - fubarhouse_user_dir is defined
    - GOROOT_BOOTSTRAP is not defined
-   - build_go_from_source|bool == true
+   - build_go_from_source
 
 - name: "Go-Lang | Define version comparrison string"
   set_fact:
@@ -103,17 +103,17 @@
   failed_when: false
   when:
    - GOROOT_BOOTSTRAP is defined
-   - build_go_from_source|bool == true
+   - build_go_from_source
 
 - name: "Go-Lang | Define URL for distribution"
   set_fact:
     go_distribution_filename: "go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}"
-  when: build_go_from_source|bool == false
+  when: not build_go_from_source
 
 - name: "Go-Lang | Define URL for source"
   set_fact:
     go_distribution_filename: "go{{ go_version }}.src"
-  when: build_go_from_source|bool == true
+  when: build_go_from_source
 
 - name: "Go-Lang | Looking for existing installation"
   stat:
@@ -122,12 +122,13 @@
   failed_when: false
 
 - name: "Go-Lang | Getting version information"
-  shell: "{{ GOROOT }}/bin/go version | cat"
+  command: "{{ GOROOT }}/bin/go version | cat"
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
   register: current_go_version
   changed_when: false
+  failed_when: false
 
 - name: "Go-Lang | Define expected version output"
   set_fact:

@@ -1,6 +1,9 @@
 galaxy_info:
   author: Karl Hepworth
-  description: Installs the Go programming language from distribution, or build from source, and install desired packages to your Golang workspace!
+  description: |
+    Installs the Go programming language from distribution, or
+    build from source, and install desired packages to your
+    Golang workspace!
   license: MIT
   min_ansible_version: 2.0
   platforms:
@@ -20,6 +23,7 @@ galaxy_info:
         - 26
         - 27
         - 28
+        - 29
         - 31
     - name: Ubuntu
       versions:
@@ -37,6 +41,7 @@ galaxy_info:
         - artful
         - bionic
         - cuttlefish
+        - disco
   galaxy_tags:
     - go
     - development

@@ -23,6 +23,7 @@ env:
   - distro: ubuntu1710
   - distro: ubuntu1804
   - distro: ubuntu1810
+  - distro: ubuntu1904
   - distro: centos7
   - distro: debian8
   - distro: debian9
@@ -32,6 +33,7 @@ env:
   - distro: fedora26
   - distro: fedora27
   - distro: fedora28
+  - distro: fedora29
   - distro: fedora31
 
 before_install:
