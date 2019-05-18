@@ -28,16 +28,12 @@
 
 - name: "Go-Lang | Removing existing installation"
   file:
-    path: "{{ GOROOT }}/{{ item }}"
+    path: "{{ GOROOT }}"
     state: absent
-  with_items:
-    - bin
-    - pkg
-    - src
   when: not build_go_from_source
 
 - name: "Go-Lang | Moving to installation directory"
-  command: "cp -rf {{ go_temporary_dir }}/go/* {{ GOROOT }}/"
+  command: "mv -f {{ go_temporary_dir }}/go {{ GOROOT }}"
   when: not build_go_from_source
 
 - name: "Go-Lang | Remove temporary data"
