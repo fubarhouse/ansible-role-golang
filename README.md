@@ -82,6 +82,7 @@ go_install:
   dest: github.com/fubarhouse/dvm
   # version refers to a tag, or branch.
   version: 2.2.5
+  package: github.com/fubarhouse/dvm
 ````
 
 To ensure all packages are removed before running the play, you can use the go_reget variable:

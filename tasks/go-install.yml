@@ -24,7 +24,7 @@
   changed_when: false
 
 - name: "Go-Lang | Install packages"
-  command: "{{ GOROOT }}/bin/go install {{ item.dest }}/..."
+  command: "{{ GOROOT }}/bin/go install {{ item.package }}/..."
   environment:
     GOROOT: "{{ GOROOT }}"
     GOPATH: "{{ GOPATH }}"
