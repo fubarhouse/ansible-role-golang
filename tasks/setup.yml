@@ -21,9 +21,9 @@
     fubarhouse_user_dir: "{{ shell_home_dir.stdout }}"
   when: fubarhouse_user_dir is not defined
 
-- name: "Go-Lang | Include OS-Specific tasks (CentOS)"
+- name: "Go-Lang | Include OS-Specific tasks (CentOS and Amazon)"
   include_tasks: tasks-CentOS.yml
-  when: ansible_distribution == "CentOS"
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Amazon"
 
 - name: "Go-Lang | Include OS-Specific tasks (Darwin)"
   include_tasks: tasks-Darwin.yml
@@ -42,6 +42,7 @@
   when:
     - ansible_os_family == "RedHat"
     - ansible_distribution != "CentOS"
+    - ansible_distribution != "Amazon"
 
 - name: "Go-Lang | Define GO111MODULE"
   set_fact:
