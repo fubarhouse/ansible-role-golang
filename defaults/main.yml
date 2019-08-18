@@ -16,7 +16,5 @@ install_go_bootstrap: false
 go_build_script: make.bash
 
 # Go get
-go_get:
-- name: dep
-  url: github.com/golang/dep/cmd/dep
+go_get: []
 go_install: []
