@@ -10,10 +10,11 @@
     GOROOT: /home/travis/goroot1.9
     GOPATH: /home/travis/gopath
     GOROOT_BOOTSTRAP: /home/travis/goroot1.4
-    GO111MODULE: "off"
+    GO111MODULE: "on"
     go_get:
       - name: dep
         url: github.com/golang/dep/cmd/dep
+        modules: false
 
   pre_tasks:
     - name: Check temporary directory permissions.

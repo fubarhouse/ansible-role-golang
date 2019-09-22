@@ -18,12 +18,22 @@
     - go_reget
     - go_package_locations is defined
 
-- name: "Go-Lang | Run get commands"
+- name: "Go-Lang | Run get commands with modules"
   command: "{{ GOROOT }}/bin/go get -u {{ item.url }}"
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
-    GOPROXY: "{{ GOPROXY }}"
-    GO111MODULE: "{{ GO111MODULE }}"
+#    GO111MODULE: "{{ GO111MODULE }}"
+    GO111MODULE: "'on'"
   with_items: "{{ go_get }}"
   changed_when: false
+  when: item.modules
+
+- name: "Go-Lang | Run get commands without modules"
+  command: "{{ GOROOT }}/bin/go get -u {{ item.url }}"
+  environment:
+    GOPATH: "{{ GOPATH }}"
+    GOROOT: "{{ GOROOT }}"
+  with_items: "{{ go_get }}"
+  changed_when: false
+  when: item.modules is not defined or not item.modules
