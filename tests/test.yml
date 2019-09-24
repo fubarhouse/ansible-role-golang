@@ -12,9 +12,17 @@
     GOROOT_BOOTSTRAP: /home/travis/goroot1.4
     GO111MODULE: "on"
     go_get:
+      # Test install package with no modules config (default):
+      - name: go-gitlab
+        url: github.com/xanzy/go-gitlab
+      # Test install package with modules configured to off:
       - name: dep
         url: github.com/golang/dep/cmd/dep
         modules: false
+      # Test install package with modules configured to on:
+      - name: logrus
+        url: github.com/sirupsen/logrus
+        modules: true
 
   pre_tasks:
     - name: Check temporary directory permissions.
