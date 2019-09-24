@@ -60,13 +60,29 @@ Which script should be used when building from source
 go_build_script: make.bash
 ````
 
-To install `go get` binaries/projects, add them to `go_get`
+To install `go get` binaries/projects, add them to `go_get` with any modules configuration as desired. By not specifying a value for `modules`, the installation will assume the value of `GO111MODULE`.
+
+**Default configuration without modules configuration**:
+````yaml
+go_get:
+- name: golint
+  url: github.com/golang/lint/golint
+````
+
+**Configuration with modules disabled**:
+````yaml
+go_get:
+- name: dvm
+  url: github.com/fubarhouse/dvm
+  modules: false
+````
+
+**Configuration with modules enabled**:
 ````yaml
 go_get:
 - name: gopm
   url: github.com/gpmgo/gopm
-- name: golint
-  url: github.com/golang/lint/golint
+  modules: true
 ````
 
 You can also manually clone and get specific versions of packages, which does not include the download of any dependencies.
