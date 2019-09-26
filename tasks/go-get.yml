@@ -18,12 +18,38 @@
     - go_reget
     - go_package_locations is defined
 
+# When `go_get` items do not have modules configuration, the GO111MODULES variable
+# will use the default value configured by the environment or Ansible.
 - name: "Go-Lang | Run get commands"
   command: "{{ GOROOT }}/bin/go get -u {{ item.url }}"
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
-    GOPROXY: "{{ GOPROXY }}"
     GO111MODULE: "{{ GO111MODULE }}"
   with_items: "{{ go_get }}"
   changed_when: false
+  when: item.modules is not defined
+
+# `go_get` items configured with modules as true will be installed with
+# GO111MODULES as 'on' to use a module-based installation for those items.
+- name: "Go-Lang | Run get commands with modules"
+  command: "{{ GOROOT }}/bin/go get -u {{ item.url }}"
+  environment:
+    GOPATH: "{{ GOPATH }}"
+    GOROOT: "{{ GOROOT }}"
+    GO111MODULE: "on"
+  with_items: "{{ go_get }}"
+  changed_when: false
+  when: item.modules is defined and item.modules
+
+# `go_get` items configured with modules as false will be installed with
+# GO111MODULES as 'off' to use a non-module-based installation for those items.
+- name: "Go-Lang | Run get commands without modules"
+  command: "{{ GOROOT }}/bin/go get -u {{ item.url }}"
+  environment:
+    GOPATH: "{{ GOPATH }}"
+    GOROOT: "{{ GOROOT }}"
+    GO111MODULE: "off"
+  with_items: "{{ go_get }}"
+  changed_when: false
+  when: item.modules is defined and not item.modules
