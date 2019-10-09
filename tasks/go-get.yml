@@ -25,6 +25,7 @@
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
+    GOPROXY: "{{ GOPROXY }}"
     GO111MODULE: "{{ GO111MODULE }}"
   with_items: "{{ go_get }}"
   changed_when: false
@@ -37,6 +38,7 @@
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
+    GOPROXY: "{{ GOPROXY }}"
     GO111MODULE: "on"
   with_items: "{{ go_get }}"
   changed_when: false
@@ -49,6 +51,7 @@
   environment:
     GOPATH: "{{ GOPATH }}"
     GOROOT: "{{ GOROOT }}"
+    GOPROXY: "{{ GOPROXY }}"
     GO111MODULE: "off"
   with_items: "{{ go_get }}"
   changed_when: false
