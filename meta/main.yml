@@ -42,7 +42,7 @@ galaxy_info:
         - artful
         - bionic
         - cuttlefish
-        - disco
+        - disco dingo
   galaxy_tags:
     - go
     - development
