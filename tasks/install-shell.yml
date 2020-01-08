@@ -1,5 +1,12 @@
 ---
 
+- name: Go_Lang | create configured shell profile
+  file:
+    path: "{{ golang_shell_profile }}"
+    state: touch
+  when:
+    - golang_shell_profile is defined
+
 - name: "Go_Lang | Identify if configured shell profile exists"
   stat:
     path: "{{ golang_shell_profile }}"
