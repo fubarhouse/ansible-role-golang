@@ -4,7 +4,7 @@
 # Go
 go_reget: false
 go_install_clean: false
-go_version: 1.13.5
+go_version: 1.13.8
 go_uninstall: false
 go_custom_mirror: https://storage.googleapis.com/golang
 go_temporary_dir: /tmp
