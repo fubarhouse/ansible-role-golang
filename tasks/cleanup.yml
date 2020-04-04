@@ -10,6 +10,7 @@
   file:
     path: "{{ GOPATH }}"
     state: absent
+  when: go_install_clean_full
   failed_when: false
 
 - name: "Go-Lang | Removing GOBOOTSTRAP"
