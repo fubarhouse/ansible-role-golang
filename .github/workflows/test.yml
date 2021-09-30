@@ -6,7 +6,8 @@ jobs:
   test:
     strategy:
       matrix:
-        distro: [ubuntu1210, ubuntu1304, ubuntu1310, ubuntu1410, ubuntu1504, ubuntu1510, ubuntu1604, ubuntu1610, ubuntu1704, ubuntu1710, ubuntu1804, ubuntu1810, ubuntu1904, centos7, debian8, debian9, debian10, fedora24, fedora25, fedora26, fedora27, fedora28, fedora29, fedora30, fedora31]
+        distro: [ubuntu1210, ubuntu1304, ubuntu1310, ubuntu1410, ubuntu1504, ubuntu1510, ubuntu1604, ubuntu1610, ubuntu1704, ubuntu1710, ubuntu1804, ubuntu1810, ubuntu1904, centos7, debian8, debian9, fedora24, fedora25, fedora26, fedora27, fedora28, fedora29, fedora30, fedora31]
+        # todo: Need to look at debian10
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
