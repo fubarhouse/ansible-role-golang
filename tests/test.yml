@@ -5,7 +5,7 @@
   vars:
     build_go_from_source: true
     install_go_bootstrap: true
-    go_version: 1.17.0
+    go_version: 1.17
     go_temporary_dir: /home/travis/temp
     GOROOT: /home/travis/goroot1.9
     GOPATH: /home/travis/gopath
