@@ -1,0 +1,34 @@
+name: Ansible Role Tests
+
+on: [push, pull_request, release]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        distro: [ubuntu1210, ubuntu1304, ubuntu1310, ubuntu1410, ubuntu1504, ubuntu1510, ubuntu1604, ubuntu1610, ubuntu1704, ubuntu1710, ubuntu1804, ubuntu1810, ubuntu1904, centos7, debian8, debian9, debian10, fedora24, fedora25, fedora26, fedora27, fedora28, fedora29, fedora30, fedora31]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+      - name: Install testing suite
+        run: GO111MODULE=on go install github.com/fubarhouse/ansible-role-tester@latest
+      - name: Change PWD
+        run: cd ${GITHUB_WORKSPACE}
+      - name: Initialise test
+        run: ansible-role-tester run --name github_action_test-${{ matrix.distro }} --user fubarhouse --distribution ${{ matrix.distro }}
+      - name: Run installation test
+        run: ansible-role-tester install --name github_action_test-${{ matrix.distro }}
+      - name: Run Test
+        run: ansible-role-tester test --name github_action_test-${{ matrix.distro }} --playbook ./tests/test.yml
+      - name: Fail if appropriate
+        run: ansible-role-tester test --name github_action_test-${{ matrix.distro }} --playbook ./tests/test.yml | grep 'failed=0'
+      - name: Cleanup
+        run: ansible-role-tester destroy --name github_action_test-${{ matrix.distro }}
+        if: always()
+      - name: Sleep for 10 seconds
+        run: sleep 10
