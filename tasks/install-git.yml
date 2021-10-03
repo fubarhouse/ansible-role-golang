@@ -16,7 +16,7 @@
   git:
     repo: "https://github.com/golang/go.git"
     dest: "{{ GOROOT }}"
-    version: "release-branch.{{ go_version_string }}"
+    version: "{{ go_version_string }}"
     clone: yes
     update: no
     force: yes
