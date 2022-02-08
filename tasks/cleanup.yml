@@ -4,6 +4,7 @@
   file:
     path: "{{ GOROOT }}"
     state: absent
+  become: yes
   failed_when: false
 
 - name: "Go-Lang | Removing GOPATH"

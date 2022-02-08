@@ -8,11 +8,13 @@
     validate_certs: no
 
 - name: "Go-Lang | Empty destination directory"
+  become: yes
   file:
     path: "{{ GOROOT }}"
     state: absent
 
 - name: "Go-Lang | Ensure directory is writable"
+  become: yes
   file:
     path: "{{ GOROOT }}"
     state: directory
@@ -27,12 +29,14 @@
     copy: "no"
 
 - name: "Go-Lang | Removing existing installation"
+  become: yes
   file:
     path: "{{ GOROOT }}"
     state: absent
   when: not build_go_from_source
 
 - name: "Go-Lang | Moving to installation directory"
+  become: yes
   command: "mv -f {{ go_temporary_dir }}/go {{ GOROOT }}"
   when: not build_go_from_source
 
