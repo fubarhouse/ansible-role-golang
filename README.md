@@ -2,7 +2,7 @@
 
 # Ansible Role: Go
 
-[![Build Status](https://img.shields.io/travis/fubarhouse/ansible-role-golang/master.svg?style=for-the-badge)](https://travis-ci.org/fubarhouse/ansible-role-golang)
+![Build Status](https://github.com/fubarhouse/ansible-role-golang/actions/workflows/test.yml/badge.svg)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg?style=for-the-badge)](https://github.com/orangemug/stability-badges)
 [![Ansible Galaxy](https://img.shields.io/ansible/role/14309.svg?style=for-the-badge)](https://galaxy.ansible.com/fubarhouse/golang)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://raw.githubusercontent.com/fubarhouse/ansible-role-golang/master/LICENSE)
